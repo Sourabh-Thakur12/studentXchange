@@ -1,0 +1,1 @@
+/home/sourabh/Systems/Obsidian/Ideaverse/System/ProjectPlanner/projects/studentXchange/architecture.md
