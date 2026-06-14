@@ -1,5 +1,116 @@
+//db schema setup
+
+require("dotenv").config();
+
+const sdk = require("node-appwrite");
+
+const client = new sdk.Client()
+    .setEndpoint(process.env.APPWRITE_ENDPOINT)
+    .setProject(process.env.APPWRITE_PROJECT_ID)
+    .setKey(process.env.APPWRITE_API_KEY);
+
+const tablesDB = new sdk.TablesDB(client);
+
+const DATABASE_ID = process.env.APPWRITE_DATABASE_ID;
+
+
+
+//table exist check
+async function tableExists(tableId) {
+    try {
+        await tablesDB.getTable({
+            databaseId: DATABASE_ID,
+            tableId
+        });
+
+        return true;
+
+    } catch (error) {
+
+        if (error.code === 404) {
+            return false;
+        }
+
+        throw error;
+    }
+}
+
+async function createTables() {
+
+    for (const table of TABLES) {
+
+        const exists = await tableExists(table.tableId);
+
+        if (exists) {
+
+            console.log(`✓ ${table.tableId} already exists`);
+
+            continue;
+        }
+
+        // create table
+        console.log(`Checking ${table.tableId}...`);
+    }
+}
+
 const TABLES = [
     {
+        tableId: "users",
+        name: "Users",
+        columns: [
+            {key: "userId",
+            type: "varchar",
+            size: 50,
+            required: true
+        },
+
+        {
+            key: "name",
+            type: "varchar",
+            size: 100,
+            required: true
+        },
+
+        {
+            key: "email",
+            type: "varchar",
+            size: 255,
+            required: true
+        },
+
+        {
+            key: "avatarUrl",
+            type: "varchar",
+            size: 500,
+            required: false
+        },
+
+        {
+            key: "createdAt",
+            type: "datetime",
+            required: true
+        },
+
+        {
+            key: "verified",
+            type: "boolean",
+            required: true
+        }
+    ],
+        indexes: [
+        {
+            key: "idx_userId",
+            type: "unique",
+            attributes: ["userId"]
+        },
+
+        {
+            key: "idx_email",
+            type: "unique",
+            attributes: ["email"]
+        }
+    ],
+
         tableId: "listings",
         name: "Listings",
         columns: [
@@ -124,7 +235,7 @@ const TABLES = [
     },
 
     {
-        tableId: "messages",
+        tableId: "message",
 
         name: "Messages",
 
@@ -153,4 +264,6 @@ const TABLES = [
         ]
     }
 ];
+
+createTables()
 
