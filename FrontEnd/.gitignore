@@ -2,7 +2,10 @@
 
 # dependencies
 node_modules/
+<<<<<<< HEAD
 package-lock.json
+=======
+>>>>>>> parent of 282a884 (Delete FrontEnd directory)
 
 # Expo
 .expo/
@@ -37,6 +40,11 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+<<<<<<< HEAD
+=======
+example
+
+>>>>>>> parent of 282a884 (Delete FrontEnd directory)
 # generated native folders
 /ios
 /android

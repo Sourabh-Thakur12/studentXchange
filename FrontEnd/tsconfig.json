@@ -4,8 +4,15 @@
     "strict": true,
     "paths": {
       "@/*": [
+<<<<<<< HEAD
         "./*",
         "./src/*"
+=======
+        "./src/*"
+      ],
+      "@/assets/*": [
+        "./assets/*"
+>>>>>>> parent of 282a884 (Delete FrontEnd directory)
       ]
     }
   },
@@ -13,7 +20,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
+<<<<<<< HEAD
     "expo-env.d.ts",
     "nativewind-env.d.ts"
   ]
 }
+=======
+    "expo-env.d.ts"
+  ]
+}
+>>>>>>> parent of 282a884 (Delete FrontEnd directory)
