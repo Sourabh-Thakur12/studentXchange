@@ -1,0 +1,11 @@
+<<<<<<< HEAD:Frontend/global.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+=======
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+ 
+@import "nativewind/theme";
+>>>>>>> 484988f119f3a0d6f0937710c94a9bdfe7beb9f2:FrontEnd/global.css
