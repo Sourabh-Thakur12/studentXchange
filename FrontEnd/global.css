@@ -2,4 +2,198 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css";
  
-@import "nativewind/theme";
+@import "tailwindcss";
+
+@theme {
+  /* ── Colors ── */
+  --color-background: #fbf9f3;
+  --color-on-background: #1b1c19;
+
+  --color-surface: #fbf9f3;
+  --color-surface-dim: #dcdad4;
+  --color-surface-bright: #fbf9f3;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f5f3ee;
+  --color-surface: #f0eee8;
+  --color-surface-high: #eae8e2;
+  --color-surface-highest: #e4e2dd;
+  --color-surface-variant: #e4e2dd;
+  --color-surface-tint: #3c6a00;
+
+  --color-on-surface: #1b1c19;
+  --color-on-surface-variant: #424939;
+  --color-inverse-surface: #30312d;
+  --color-inverse-on-surface: #f2f1eb;
+
+  --color-outline: #737a68;
+  --color-outline-variant: #c2c9b5;
+
+  --color-primary: #3c6a00;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #7cb342;
+  --color-on-primary-container: #234100;
+  --color-inverse-primary: #9dd761;
+  --color-primary-fixed: #b8f47a;
+  --color-primary-fixed-dim: #9dd761;
+  --color-on-primary-fixed: #0e2000;
+  --color-on-primary-fixed-variant: #2c5000;
+
+  --color-secondary: #006688;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #58cafe;
+  --color-on-secondary-container: #005370;
+  --color-secondary-fixed: #c2e8ff;
+  --color-secondary-fixed-dim: #75d1ff;
+  --color-on-secondary-fixed: #001e2b;
+  --color-on-secondary-fixed-variant: #004d67;
+
+  --color-tertiary: #964261;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #e885a7;
+  --color-on-tertiary-container: #681d3c;
+  --color-tertiary-fixed: #ffd9e2;
+  --color-tertiary-fixed-dim: #ffb0c9;
+  --color-on-tertiary-fixed: #3e001e;
+  --color-on-tertiary-fixed-variant: #792b4a;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* ── Semantic aliases (component shortcuts) ── */
+  --color-canvas: #faf8f2;
+  --color-card: #ffffff;
+  --color-card-tinted: #fdfbf7;
+  --color-input-border: #d1ccc0;
+  --color-grass: #7cb342;
+  --color-sky: #4fc3f7;
+  --color-petal: #f48fb1;
+  --color-ink: #2b2b2b;
+  --color-ink-deep: #212635;
+
+  /* ── Typography – font families ── */
+  --font-sand: Quicksand;
+  --font-sand-light: QuicksandLight;
+  --font-sand-bold: QuicksandBold;
+  --font-sand-semi-bold: QuicksandSemiBold;
+  --font-sand-medium: QuicksandMedium;
+  
+  --font-mono: JetBrainsMono;
+  --font-mono-bold: JetBrainsMonoBold;
+  --font-mono-bold-italic: JetBrainsMonoBoldItalic;
+  --font-mono-medium: JetBrainsMonoMedium;
+  --font-mono-light: JetBrainsMonoLight;
+  --font-mono-extra-bold: JetBrainsMonoExtraBold;
+  --font-mono-extra-light: JetBrainsMonoExtraLight;
+  --font-mono-italic: JetBrainsMonoItalic;
+
+  /* ── Font sizes ── */
+  --font-size-headline-xl: 2rem;          /* 32px */
+  --font-size-headline-lg: 1.5rem;        /* 24px */
+  --font-size-headline-lg-mobile: 1.25rem;/* 20px */
+  --font-size-title-md: 1.125rem;         /* 18px */
+  --font-size-body-lg: 1rem;              /* 16px */
+  --font-size-body-md: 0.875rem;          /* 14px */
+  --font-size-label-md: 0.75rem;          /* 12px */
+  --font-size-price: 1.25rem;             /* 20px */
+
+  /* ── Line heights ── */
+  --line-height-headline-xl: 2.5rem;      /* 40px */
+  --line-height-headline-lg: 2rem;        /* 32px */
+  --line-height-headline-lg-mobile: 1.75rem;
+  --line-height-title-md: 1.5rem;         /* 24px */
+  --line-height-body-lg: 1.5rem;
+  --line-height-body-md: 1.25rem;         /* 20px */
+  --line-height-label-md: 1rem;           /* 16px */
+  --line-height-price: 1.5rem;            /* 24px */
+
+  /* ── Font weights ── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ── Letter spacing ── */
+  --letter-spacing-headline-xl: -0.02em;
+  --letter-spacing-headline-lg: -0.01em;
+  --letter-spacing-label-md: 0.05em;
+
+  /* ── Border radius ── */
+  --radius-sm: 0.25rem;   /* 4px  */
+  --radius-md: 0.75rem;   /* 12px */
+  --radius-lg: 1rem;      /* 16px */
+  --radius-xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  --radius-component: 0.9375rem; /* 15px – Ghibli pillowy default */
+
+  /* ── Spacing (8pt grid) ── */
+  --spacing-base: 0.5rem;   /* 8px  */
+  --spacing-xs: 0.25rem;    /* 4px  */
+  --spacing-sm: 0.5rem;     /* 8px  */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-gutter: 1rem;
+  --spacing-margin-mobile: 1rem;
+  --spacing-margin-desktop: 1.5rem;
+
+  /* ── Shadows (elevation system) ── */
+  --shadow-level-1: 0 4px 15px rgba(0, 0, 0, 0.10);
+  --shadow-level-2: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+  /* ── Layout ── */
+  --max-width-content: 1280px;
+  --min-touch-target: 2.75rem; /* 44px */
+
+  /* ── Motion ── */
+  --duration-fast: 200ms;
+  --duration-standard: 300ms;
+  --duration-entry: 420ms;
+  --duration-stagger: 80ms;
+  --ease-organic: cubic-bezier(0.0, 0.0, 0.2, 1); /* ease-out */
+}
+
+@utility shadow-level-0 {
+  box-shadow: none;
+}
+
+@utility shadow-level-1 {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+}
+
+@utility shadow-level-2 {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover-lift shorthand: pair with hover: prefix */
+@utility shadow-lift {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Press / active tactile feedback */
+@utility shadow-press {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(1px);
+}
+
+/* Inset variant for sunken inputs */
+@utility shadow-inset {
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Focus ring — grass green */
+@utility shadow-focus-primary {
+  box-shadow: 0 0 0 3px rgba(60, 106, 0, 0.30);
+}
+
+/* Focus ring — sky blue */
+@utility shadow-focus-secondary {
+  box-shadow: 0 0 0 3px rgba(0, 102, 136, 0.28);
+}
+
+/* Error focus ring */
+@utility shadow-focus-error {
+  box-shadow: 0 0 0 3px rgba(186, 26, 26, 0.28);
+}
