@@ -24,7 +24,20 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
+    'SpaceMono': require('../../assets/fonts/SpaceMono-Regular.ttf'),
+    'Quicksand': require('../../assets/fonts/Quicksand-Regular.ttf'),
+    'QuicksandLight': require('../../assets/fonts/Quicksand-Light.ttf'),
+    'QuicksandMedium': require('../../assets/fonts/Quicksand-Medium.ttf'),
+    'QuicksandBold': require('../../assets/fonts/Quicksand-Bold.ttf'),
+    'QuicksandSemiBold': require('../../assets/fonts/Quicksand-SemiBold.ttf'),
+    
+    'JetBrainsMono': require('../../assets/fonts/JetBrainsMono-Regular.ttf'),
+    'JetBrainsMonoBold': require('../../assets/fonts/JetBrainsMono-Bold.ttf'),
+    'JetBrainsMonoLight': require('../../assets/fonts/JetBrainsMono-Light.ttf'),
+    'JetBrainsMonoMedium': require('../../assets/fonts/JetBrainsMono-Medium.ttf'),
+    'JetBrainsMonoExtraBold': require('../../assets/fonts/JetBrainsMono-ExtraBold.ttf'),
+    'JetBrainsMonoBoldItalic': require('../../assets/fonts/JetBrainsMono-BoldItalic.ttf'),
+    
     ...FontAwesome.font,
   });
 
