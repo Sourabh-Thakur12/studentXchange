@@ -14,9 +14,13 @@
     "dotenv": "^17.4.2",
     "expo": "~54.0.34",
     "expo-constants": "~18.0.13",
+<<<<<<< HEAD
     "expo-dev-client": "~6.0.21",
     "expo-font": "~14.0.12",
     "expo-intent-launcher": "~13.0.8",
+=======
+    "expo-font": "~14.0.12",
+>>>>>>> c50fb55 (feat:cuestom fonts, colors and spacing)
     "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.12",
     "expo-router": "~6.0.23",
