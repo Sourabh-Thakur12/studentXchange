@@ -1,3 +1,5 @@
+//error mapping -> appwrite and auth
+
 const AppError = require("../utils/AppError");
 const ApiResponse = require("../utils/apiResponse");
 
@@ -9,7 +11,7 @@ const appwriteErrorMap = {
     409: "Email already exists.",
 };
 
-const normalizeError = (error) => {
+const fixError = (error) => {
     if (error instanceof AppError) {
         return error;
     }
@@ -23,14 +25,14 @@ const normalizeError = (error) => {
 };
 
 const errorHandler = (error, req, res, next) => {
-    const normalizedError = normalizeError(error);
+    const fixedError = fixError(error);
     const payload = process.env.NODE_ENV === "production"
         ? null
-        : normalizedError.details;
+        : fixedError.details;
 
     return res
-        .status(normalizedError.statusCode)
-        .json(ApiResponse.error(normalizedError.message, payload));
+        .status(fixedError.statusCode)
+        .json(ApiResponse.error(fixedError.message, payload));
 };
 
 module.exports = errorHandler;

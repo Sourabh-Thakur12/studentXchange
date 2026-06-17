@@ -1,57 +1,102 @@
-const authService = require("./auth.service");
-const ApiResponse = require("../shared/utils/apiResponse");
 
-const register = async (req, res, next) => {
+
+const authService = require("./auth.service")
+const apiResponse = require("../shared/utils/apiResponse")
+
+//register a new user
+
+async function register(req, res, next) {
     try {
-        const result = await authService.register(req.body);
+        const {name, email, password} = req.body
 
-        return res
-            .status(201)
-            .json(ApiResponse.success(result, "Registration successful. Please verify your email."));
-    } catch (error) {
-        return next(error);
+        const result = await authService.register({
+            name, email
+        })
+
+        return res.status(201).json(
+            ApiResponse.success(
+                result,
+                "Registration successful. Please verify your email."
+            )
+        );
     }
-};
+    catch(error){
+        next(error)
+    }
+}
 
-const login = async (req, res, next) => {
+// login exisiting user 
+
+async function login(req, res, next) {
     try {
-        const result = await authService.login(req.body);
+        const { email, password } = req.body;
 
-        return res
-            .status(200)
-            .json(ApiResponse.success(result, "Login successful."));
+        const result = await authService.login({
+            email,
+            password,
+        });
+
+        return res.status(200).json(
+            ApiResponse.success(
+                result,
+                "Login successful."
+            )
+        );
+
     } catch (error) {
-        return next(error);
+        next(error);
     }
-};
+}
 
-const verifyEmail = async (req, res, next) => {
+//verify user email
+
+async function verifyEmail(req, res, next) {
     try {
-        const result = await authService.verifyEmail(req.query);
+        const { userId, secret } = req.query;
 
-        return res
-            .status(200)
-            .json(ApiResponse.success(result, "Email verified successfully."));
+        const result = await authService.verifyEmail({
+            userId,
+            secret,
+        });
+
+        return res.status(200).json(
+            ApiResponse.success(
+                result,
+                "Email verified successfully."
+            )
+        );
+
     } catch (error) {
-        return next(error);
+        next(error);
     }
-};
+}
 
-const getCurrentUser = async (req, res, next) => {
+
+async function getCurrentUser(req, res, next) {
     try {
-        const result = await authService.getCurrentUser(req.user.userId);
+        const userId = req.user.userId;
 
-        return res
-            .status(200)
-            .json(ApiResponse.success(result, "User fetched successfully."));
+        const user = await authService.getCurrentUser(
+            userId
+        );
+
+        return res.status(200).json(
+            ApiResponse.success(
+                user,
+                "User fetched successfully."
+            )
+        );
+
     } catch (error) {
-        return next(error);
+        next(error);
     }
-};
+}
 
 module.exports = {
     register,
     login,
     verifyEmail,
+    logout,
     getCurrentUser,
 };
+
