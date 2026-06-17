@@ -35,7 +35,7 @@ async function setupBucket() {
     const exists = await bucketExists();
 
     if (exists) {
-        console.log("[ok] Bucket already exists");
+        console.log("Bucket already exists");
         return;
     }
 
@@ -58,7 +58,7 @@ async function setupBucket() {
         transformations: true
     });
 
-    console.log("[ok] Created listing-images bucket");
+    console.log("Created listing-images bucket");
 }
 
 setupBucket().catch((error) => {
