@@ -11,30 +11,38 @@
 // }
 
 // export default SignUp
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 export default function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
   return (
     <View className="flex-1 max-w-8/9 ">
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1 justify-center p-4"
       >
         <View className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-          
           {/* Header */}
           <View className="items-center mb-8">
-            <Text className="text-3xl font-mono-bold text-primary">Join</Text>
-            <Text className="text-3xl font-mono-bold text-primary">studentXchange</Text>
+            <Text className="text-3xl font-sand-bold text-primary">Join</Text>
+            <Text className="text-3xl font-sand-bold text-primary">
+              studentXchange
+            </Text>
             <Text className="text-on-primary-fixed mt-2 text-sm">
               The cozy corner of campus commerce.
             </Text>
@@ -92,31 +100,41 @@ export default function SignUp() {
                 placeholderTextColor="#A1A898"
               />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Feather name={showPassword ? "eye-off" : "eye"} size={20} color="#2D3A1E" />
+                <Feather
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={20}
+                  color="#2D3A1E"
+                />
               </TouchableOpacity>
             </View>
           </View>
 
           {/* Guidelines Checkbox */}
-          <TouchableOpacity 
+          <TouchableOpacity
             className="flex-row items-start pr-4 mb-8"
             onPress={() => setAgreed(!agreed)}
             activeOpacity={0.7}
           >
-            <View className={`w-5 h-5 rounded border mt-0.5 items-center justify-center mr-3 ${agreed ? 'bg-[#7BB044] border-[#7BB044]' : 'bg-white border-[#D1D5CB]'}`}>
+            <View
+              className={`w-5 h-5 rounded border mt-0.5 items-center justify-center mr-3 ${agreed ? "bg-[#7BB044] border-[#7BB044]" : "bg-white border-[#D1D5CB]"}`}
+            >
               {agreed && <Feather name="check" size={14} color="white" />}
             </View>
             <Text className="text-[#5C6652] text-sm leading-5">
-              I agree to the <Text className="text-secondary font-medium">Campus Guidelines</Text> and promise to be a good neighbor.
+              I agree to the{" "}
+              <Text className="text-secondary font-medium">
+                Campus Guidelines
+              </Text>{" "}
+              and promise to be a good neighbor.
             </Text>
           </TouchableOpacity>
 
           {/* Submit Button */}
-          <TouchableOpacity 
+          <TouchableOpacity
             className="bg-primary-container rounded-xl py-4 flex-row justify-center items-center active:bg-[#6A9A3A]"
             activeOpacity={0.8}
           >
-            <Text className="text-[#1A2610] font-bold text-lg mr-2">
+            <Text className="text-[#1A2610] font-sand-bold text-lg mr-2">
               Start Exchanging
             </Text>
             <Feather name="arrow-right" size={20} color="#1A2610" />
@@ -135,7 +153,6 @@ export default function SignUp() {
               </Link>
             </TouchableOpacity>
           </View>
-
         </View>
       </KeyboardAvoidingView>
     </View>
