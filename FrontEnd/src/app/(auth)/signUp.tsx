@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-
-const SignUp = () => {
+import SignUp from '@/src/components/ui/sign-up'
+const SignUpPage = () => {
   return (
-    <View>
-      <Text>SignUp</Text>
+    <View className='flex-1  bg-surface justify-center items-center'>
+      <SignUp />
     </View>
   )
 }
 
-export default SignUp
+export default SignUpPage
