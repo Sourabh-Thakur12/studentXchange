@@ -1,13 +1,12 @@
 //db schema setup
-
-require("dotenv").config();
+const config = require("../../shared/config/env")
 
 const sdk = require("node-appwrite");
 
 const client = new sdk.Client()
-    .setEndpoint(process.env.APPWRITE_ENDPOINT)
-    .setProject(process.env.APPWRITE_PROJECT_ID)
-    .setKey(process.env.APPWRITE_API_KEY);
+    .setEndpoint(config.APPWRITE_ENDPOINT)
+    .setProject(config.APPWRITE_PROJECT_ID)
+    .setKey(config.APPWRITE_API_KEY);
 
 const tablesDB = new sdk.TablesDB(client);
 
