@@ -3,6 +3,7 @@ const express = require("express");
 const authRoutes = require("./auth/auth.routes");
 const errorHandler = require("./shared/middlewares/errorHandler");
 const ApiResponse = require("./shared/utils/apiResponse");
+const config = require('./shared/config/env');
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = config.EXPRESS_PORT | 5000
 
 if (require.main === module) {
     app.listen(PORT, () => {
