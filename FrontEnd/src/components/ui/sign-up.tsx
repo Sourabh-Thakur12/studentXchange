@@ -41,7 +41,7 @@ export default function SignUp() {
           <View className="items-center mb-8">
             <Text className="text-3xl font-sand-bold text-primary">Join</Text>
             <Text className="text-3xl font-sand-bold text-primary">
-              studentXchange
+              campusXchange
             </Text>
             <Text className="text-on-primary-fixed mt-2 text-sm">
               The cozy corner of campus commerce.
