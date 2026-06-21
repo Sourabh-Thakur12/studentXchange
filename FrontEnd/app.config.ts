@@ -2,11 +2,13 @@
 // import path from 'path'
 // import { fileURLToPath } from 'url'
 
+
 // loadenv.config({
 //   path : path.resolve(fileURLToPath(import.meta.url), '../.env')
 // })
 
 export default {
+<<<<<<< HEAD
 <<<<<<< HEAD
   "expo": {
     "name": "campusxchange",
@@ -15,12 +17,22 @@ export default {
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "campusxchange",
+=======
+  "expo": {
+    "name": "FrontEnd",
+    "slug": "FrontEnd",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "frontend",
+>>>>>>> af3c10a (feat: centrailised api client)
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+<<<<<<< HEAD
 =======
   expo: {
     name: "FrontEnd",
@@ -36,15 +48,18 @@ export default {
       resizeMode: "contain",
       backgroundColor: "#ffffff",
 >>>>>>> f2468b1 (feat: image picker added)
+=======
+>>>>>>> af3c10a (feat: centrailised api client)
     },
-    ios: {
-      supportsTablet: true,
+    "ios": {
+      "supportsTablet": true
     },
-    android: {
-      adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
-        backgroundColor: "#ffffff",
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       "usesCleartextTraffic": true,
       "edgeToEdgeEnabled": true,
@@ -55,18 +70,23 @@ export default {
       predictiveBackGestureEnabled: false,
       package: "com.sourabhthakur.FrontEnd",
 >>>>>>> f2468b1 (feat: image picker added)
+=======
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.sourabhthakur.FrontEnd"
+>>>>>>> af3c10a (feat: centrailised api client)
     },
-    web: {
-      bundler: "metro",
-      output: "static",
-      favicon: "./assets/images/favicon.png",
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
     },
-    plugins: [
+    "plugins": [
       "expo-router",
       [
         "expo-font",
         {
-          fonts: [
+          "fonts": [
             "./assets/fonts/JetBrainsMono-ExtraLight.ttf",
             "./assets/fonts/JetBrainsMono-Regular.ttf",
             "./assets/fonts/JetBrainsMono-Medium.ttf",
