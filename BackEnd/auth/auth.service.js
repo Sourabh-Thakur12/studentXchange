@@ -172,6 +172,12 @@ const deleteUserSession = async ({ userId, sessionId }) => {
     await users.deleteSession({ userId, sessionId }).catch(() => null);
 };
 
+const deleteCurrentSession = async (sessionSecret) => {
+    const sessionAccount = new Account(createSessionClient(sessionSecret));
+
+    await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
+};
+
 const rollbackCreatedUser = async (userId) => {
     if (!userId) {
         return;
@@ -253,15 +259,12 @@ const login = async ({ email, password }) => {
         const authUser = await users.get({ userId: passwordSession.userId });
 
         if (!authUser.emailVerification) {
-            await deleteUserSession({
-                userId: passwordSession.userId,
-                sessionId: passwordSession.$id,
-            });
+            await deleteCurrentSession(session.secret);
 
             throw new AppError("Please verify your email before logging in.", 403, "UNVERIFIED_EMAIL");
         }
 
-        let userRow = await getUserRowById(passwordSession.userId);
+        let userRow = await getUserRowById(session.userId);
 
         if (!userRow.verified) {
             userRow = await tablesDB.updateRow({
@@ -284,15 +287,8 @@ const login = async ({ email, password }) => {
             session: toPublicSession(serverSession),
         };
     } catch (error) {
-        if (serverSession?.secret && !(error instanceof AppError)) {
-            await deleteCurrentSession(serverSession.secret);
-        }
-
-        if (passwordSession && !(error instanceof AppError)) {
-            await deleteUserSession({
-                userId: passwordSession.userId,
-                sessionId: passwordSession.$id,
-            });
+        if (session && !(error instanceof AppError)) {
+            await deleteCurrentSession(session.secret);
         }
 
         throw mapAppwriteError(error, "Login failed.");
@@ -302,7 +298,12 @@ const login = async ({ email, password }) => {
 const verifyEmail = async ({ userId, secret }) => {
     try {
         await account.updateEmailVerification({ userId, secret });
-        await users.updateEmailVerification({ userId, emailVerification: true });
+
+        const authUser = await users.get({ userId });
+
+        if (!authUser.emailVerification) {
+            throw new AppError("Verification link is invalid or has expired.", 400, "EXPIRED_OR_INVALID_VERIFICATION_LINK");
+        }
 
         const userRow = await tablesDB.updateRow({
             databaseId,
