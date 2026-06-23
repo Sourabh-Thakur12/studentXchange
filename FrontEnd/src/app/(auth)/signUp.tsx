@@ -9,6 +9,12 @@ const SignUpPage = () => {
       const response = await api.post('/auth/register', { name, email, password })
       console.log(response.ok)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      if(response.ok === false) {
+        console.log(response.error)
+      }
+>>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2
 =======
       if(response.ok === false) {
         console.log(response.error)

@@ -43,17 +43,23 @@ async function apiClient<apiReturnType>(
     };
     
 <<<<<<< HEAD
+<<<<<<< HEAD
   } catch {
     return {
       ok: false,
       status: 0,
       error: "Network Error",
 =======
+=======
+>>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2
   } catch (error) {
     return {
       ok: false,
       status: 0,
       error: error instanceof Error ? error.message : String(error),
+<<<<<<< HEAD
+>>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2
+=======
 >>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2
     };
   }
