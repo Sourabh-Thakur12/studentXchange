@@ -37,5 +37,6 @@ module.exports = {
     Users,
     adminClient,
     appwriteConfig,
+    createBaseClient,
     createSessionClient,
 };
