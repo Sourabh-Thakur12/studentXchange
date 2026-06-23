@@ -128,8 +128,9 @@ const createVerificationForUser = async ({ email, password }) => {
     const session = await account.createEmailPasswordSession({ email, password });
     const sessionAccount = new Account(createSessionClient(session.secret));
 
-    try {
-        await sessionAccount.createVerification({ url: emailVerificationUrl });
+  try {
+    console.log(emailVerificationUrl)
+    await sessionAccount.createEmailVerification({ url: emailVerificationUrl });
     } finally {
         await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
     }
@@ -181,7 +182,7 @@ const register = async ({ name, email, password }) => {
                 },
             });
         } catch (error) {
-            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE");
+            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE", error);
         }
 
         await createVerificationForUser({ email, password });
@@ -251,7 +252,7 @@ const login = async ({ email, password }) => {
 
 const verifyEmail = async ({ userId, secret }) => {
     try {
-        await account.updateVerification({ userId, secret });
+        await account.updateEmailVerification({ userId, secret });
         await users.updateEmailVerification({ userId, emailVerification: true });
 
         const userRow = await tablesDB.updateRow({
