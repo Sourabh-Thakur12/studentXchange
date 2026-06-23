@@ -16,6 +16,15 @@ const fixError = (error) => {
         return error;
     }
 
+    if (error.type === "general_unauthorized_scope") {
+        return new AppError(
+            "Appwrite API key is missing required permissions.",
+            502,
+            "APPWRITE_UNAUTHORIZED_SCOPE",
+            error.message
+        );
+    }
+
     if (error.code && error.type) {
         const message = appwriteErrorMap[error.code] || error.message || "Appwrite request failed.";
         return new AppError(message, error.code >= 400 && error.code < 600 ? error.code : 502, "APPWRITE_ERROR");

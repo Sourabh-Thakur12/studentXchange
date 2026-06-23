@@ -1,7 +1,5 @@
-
-
 const authService = require("./auth.service")
-const apiResponse = require("../shared/utils/apiResponse")
+const ApiResponse = require("../shared/utils/apiResponse")
 
 //register a new user
 
@@ -10,7 +8,9 @@ async function register(req, res, next) {
         const {name, email, password} = req.body
 
         const result = await authService.register({
-            name, email
+            name,
+            email,
+            password,
         })
 
         return res.status(201).json(
@@ -96,7 +96,6 @@ module.exports = {
     register,
     login,
     verifyEmail,
-    logout,
     getCurrentUser,
 };
 

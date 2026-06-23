@@ -42,6 +42,15 @@ const mapAppwriteError = (error, fallbackMessage = "Appwrite request failed.") =
         return error;
     }
 
+    if (error.type === "general_unauthorized_scope") {
+        return new AppError(
+            "Appwrite API key is missing required permissions.",
+            502,
+            "APPWRITE_UNAUTHORIZED_SCOPE",
+            error.message
+        );
+    }
+
     const message = error.message || fallbackMessage;
 
     if (error.code === 400 && /password/i.test(message)) {
