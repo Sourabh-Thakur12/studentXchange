@@ -1,4 +1,4 @@
-import config from "./env";
+const config = require("./env");
 const {
     Account,
     Client,

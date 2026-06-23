@@ -8,6 +8,9 @@ const SignUpPage = () => {
     try {
       const response = await api.post('/auth/register', { name, email, password })
       console.log(response.ok)
+      if(response.ok === false) {
+        console.log(response.error)
+      }
     } catch (error) {
       console.error(error)
     }

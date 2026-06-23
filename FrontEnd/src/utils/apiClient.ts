@@ -42,11 +42,11 @@ async function apiClient<apiReturnType>(
       data: body,
     };
     
-  } catch {
+  } catch (error) {
     return {
       ok: false,
       status: 0,
-      error: "Network Error",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }
