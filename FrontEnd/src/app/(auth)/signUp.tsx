@@ -1,11 +1,21 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { SignUp } from '@/src/components/ui/index'
+import { api } from '@/src/utils/apiClient'
 
 const SignUpPage = () => {
+  const onSubmit = async (name: string, email: string, password: string) => {
+    try {
+      const response = await api.post('/auth/register', { name, email, password })
+      console.log(response.ok)
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
   return (
     <View className='flex-1  bg-surface justify-center items-center'>
-      <SignUp />
+      <SignUp onSubmit={onSubmit} />
     </View>
   )
 }
