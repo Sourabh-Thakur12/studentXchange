@@ -1,0 +1,17 @@
+{
+  "name": "studentxchange-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "node-appwrite": "^26.2.0",
+    "zod": "^4.4.3"
+  },
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "setup-db": "node auth/appwrite/setupdb.js",
+    "setup-storage": "node auth/appwrite/setupStorage.js"
+  }
+}

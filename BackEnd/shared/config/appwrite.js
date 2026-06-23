@@ -1,4 +1,4 @@
-import config from "./env";
+const config = require("./env");
 const {
     Account,
     Client,
@@ -36,5 +36,6 @@ module.exports = {
     Users,
     adminClient,
     appwriteConfig,
+    createBaseClient,
     createSessionClient,
 };

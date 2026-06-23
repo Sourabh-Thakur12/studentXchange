@@ -2,7 +2,7 @@ const loadenv = require('dotenv')
 const path = require('path')
 
 loadenv.config({
-  path : path.resolve(__dirname, '../../../.env')
+  path : path.resolve(__dirname, '../../.env')
 })
 
 const config = {
