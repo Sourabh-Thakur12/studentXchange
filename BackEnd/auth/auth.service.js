@@ -129,8 +129,14 @@ const createVerificationForUser = async ({ email, password }) => {
     const session = await account.createEmailPasswordSession({ email, password });
     const sessionAccount = new Account(createSessionClient(session.secret));
 
+<<<<<<< HEAD
     try {
         await sessionAccount.createEmailVerification({ url: emailVerificationUrl });
+=======
+  try {
+    console.log(emailVerificationUrl)
+    await sessionAccount.createEmailVerification({ url: emailVerificationUrl });
+>>>>>>> c57f77bf9ce47a3bbdadb8806c9e1fd839075760
     } finally {
         await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
     }
@@ -188,7 +194,7 @@ const register = async ({ name, email, password }) => {
                 },
             });
         } catch (error) {
-            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE");
+            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE", error);
         }
 
         await createVerificationForUser({ email, password });
@@ -252,12 +258,16 @@ const login = async ({ email, password }) => {
 const verifyEmail = async ({ userId, secret }) => {
     try {
         await account.updateEmailVerification({ userId, secret });
+<<<<<<< HEAD
 
         const authUser = await users.get({ userId });
 
         if (!authUser.emailVerification) {
             throw new AppError("Verification link is invalid or has expired.", 400, "EXPIRED_OR_INVALID_VERIFICATION_LINK");
         }
+=======
+        await users.updateEmailVerification({ userId, emailVerification: true });
+>>>>>>> c57f77bf9ce47a3bbdadb8806c9e1fd839075760
 
         const userRow = await tablesDB.updateRow({
             databaseId,

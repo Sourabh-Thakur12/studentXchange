@@ -18,6 +18,7 @@ async function apiClient<apiReturnType>(
   token?: string,
 ): Promise<ApiResult<apiReturnType>> {
   try {
+    console.log(`${BASE_URL}${endpoint}`);
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       headers: {
