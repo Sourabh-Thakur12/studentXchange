@@ -2,11 +2,7 @@ const loadenv = require('dotenv')
 const path = require('path')
 
 loadenv.config({
-<<<<<<< HEAD
-  path : path.resolve(__dirname, '../../.env')
-=======
   path : path.resolve(__dirname, '../../../.env')
->>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2
 })
 
 const config = {
@@ -21,8 +17,4 @@ const config = {
   EXPRESS_PORT : process.env.EXPRESS_PORT
 }
 
-<<<<<<< HEAD
 module.exports = config
-=======
-module.exports = config
->>>>>>> df74b623a7b6298d7808ef36925c80a3cb2275a2

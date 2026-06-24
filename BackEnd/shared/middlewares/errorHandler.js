@@ -30,7 +30,7 @@ const fixError = (error) => {
         return new AppError(message, error.code >= 400 && error.code < 600 ? error.code : 502, "APPWRITE_ERROR");
     }
 
-    return new AppError("Internal server error.", 500, "INTERNAL_ERROR");
+    return new AppError("Internal server error", 500, "INTERNAL_ERROR");
 };
 
 const errorHandler = (error, req, res, next) => {

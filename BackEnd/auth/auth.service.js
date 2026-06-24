@@ -130,7 +130,7 @@ const createVerificationForUser = async ({ email, password }) => {
     const sessionAccount = new Account(createSessionClient(session.secret));
 
     try {
-        await sessionAccount.createVerification({ url: emailVerificationUrl });
+        await sessionAccount.createEmailVerification({ url: emailVerificationUrl });
     } finally {
         await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
     }
