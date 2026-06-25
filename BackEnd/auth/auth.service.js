@@ -12,6 +12,7 @@ const {
 const AppError = require("../shared/utils/AppError");
 
 const account = new Account(createBaseClient());
+const adminAccount = new Account(adminClient);
 const tablesDB = new TablesDB(adminClient);
 const users = new Users(adminClient);
 
