@@ -127,16 +127,35 @@ const ensureEmailIsAvailable = async (email) => {
 };
 
 const createVerificationForUser = async ({ email, password }) => {
-    const session = await account.createEmailPasswordSession({ email, password });
-    const sessionAccount = new Account(createSessionClient(session.secret));
+    console.log("Inside the create verification service")
+    const session = await account.createEmailPasswordSession({
+        email,
+        password,
+    });
 
-  try {
-    console.log(emailVerificationUrl)
-    await sessionAccount.createEmailVerification({ url: emailVerificationUrl });
+    console.log("FULL SESSION:");
+    console.dir(session, { depth: null });
+
+    console.log("SESSION SECRET:", session.secret);
+
+    const sessionAccount = new Account(
+        createSessionClient(session.secret)
+    );
+
+    try {
+        console.log("Verification URL:", emailVerificationUrl);
+
+        await sessionAccount.createEmailVerification({
+            url: emailVerificationUrl,
+        });
+
     } finally {
-        await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
+        await sessionAccount
+            .deleteSession({ sessionId: "current" })
+            .catch(() => null);
     }
 };
+
 
 const deleteCurrentSession = async (sessionSecret) => {
     const sessionAccount = new Account(createSessionClient(sessionSecret));
@@ -158,11 +177,13 @@ const rollbackCreatedUser = async (userId) => {
 };
 
 const register = async ({ name, email, password }) => {
+    console.log("registeration started")
     if (!isCollegeEmail(email)) {
         throw new AppError("Only @ddu.du.ac.in email addresses are allowed.", 400, "INVALID_COLLEGE_EMAIL");
     }
 
     await ensureEmailIsAvailable(email);
+    console.log("email is available")
 
     let createdUser = null;
 
@@ -194,10 +215,12 @@ const register = async ({ name, email, password }) => {
         }
 
         await createVerificationForUser({ email, password });
+        console.log("user verified ")
 
         return {
             user: toPublicUser(userRow),
         };
+
     } catch (error) {
         await rollbackCreatedUser(createdUser?.$id);
 
@@ -207,6 +230,7 @@ const register = async ({ name, email, password }) => {
 
         throw mapAppwriteError(error, "Registration failed.");
     }
+    
 };
 
 const login = async ({ email, password }) => {
@@ -253,7 +277,7 @@ const login = async ({ email, password }) => {
 
 const verifyEmail = async ({ userId, secret }) => {
     try {
-        await adminAccount.updateEmailVerification({ userId, secret });
+        await account.updateEmailVerification({ userId, secret });
         await users.updateEmailVerification({ userId, emailVerification: true });
 
         const userRow = await tablesDB.updateRow({
