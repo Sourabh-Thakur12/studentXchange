@@ -18,6 +18,19 @@ const appwriteConfig = {
         || `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
 };
 
+const requiredServerEnv = [
+    "APPWRITE_ENDPOINT",
+    "APPWRITE_PROJECT_ID",
+    "APPWRITE_API_KEY",
+    "APPWRITE_DATABASE_ID",
+];
+
+const missingServerEnv = requiredServerEnv.filter((key) => !config[key]);
+
+if (missingServerEnv.length > 0) {
+    throw new Error(`Missing required Appwrite server env values: ${missingServerEnv.join(", ")}`);
+}
+
 const createBaseClient = () => new Client()
     .setEndpoint(appwriteConfig.endpoint)
     .setProject(appwriteConfig.projectId);

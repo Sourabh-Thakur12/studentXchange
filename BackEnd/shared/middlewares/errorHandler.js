@@ -18,7 +18,7 @@ const fixError = (error) => {
 
     if (error.type === "general_unauthorized_scope") {
         return new AppError(
-            "Appwrite API key is missing required permissions.",
+            "Appwrite API key is missing required permissions. Add users.read, users.write, rows.read, rows.write, and sessions.write scopes to the backend API key.",
             502,
             "APPWRITE_UNAUTHORIZED_SCOPE",
             error.message

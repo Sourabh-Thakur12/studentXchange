@@ -12,7 +12,6 @@ const {
 const AppError = require("../shared/utils/AppError");
 
 const account = new Account(createBaseClient());
-const adminAccount = new Account(adminClient);
 const tablesDB = new TablesDB(adminClient);
 const users = new Users(adminClient);
 
@@ -46,7 +45,7 @@ const mapAppwriteError = (error, fallbackMessage = "Appwrite request failed.") =
 
     if (error.type === "general_unauthorized_scope") {
         return new AppError(
-            "Appwrite API key is missing required permissions.",
+            "Appwrite API key is missing required permissions. Add users.read, users.write, rows.read, rows.write, and sessions.write scopes to the backend API key.",
             502,
             "APPWRITE_UNAUTHORIZED_SCOPE",
             error.message
@@ -126,25 +125,22 @@ const ensureEmailIsAvailable = async (email) => {
     }
 };
 
-const createVerificationForUser = async ({ email, password }) => {
-    console.log("Inside the create verification service")
-    const session = await account.createEmailPasswordSession({
-        email,
-        password,
-    });
+const createVerificationForUser = async (userId) => {
+    const session = await users.createSession({ userId });
 
-    console.log("FULL SESSION:");
-    console.dir(session, { depth: null });
-
-    console.log("SESSION SECRET:", session.secret);
+    if (!session.secret) {
+        throw new AppError(
+            "Appwrite did not return a session secret for email verification.",
+            502,
+            "APPWRITE_SESSION_SECRET_MISSING"
+        );
+    }
 
     const sessionAccount = new Account(
         createSessionClient(session.secret)
     );
 
     try {
-        console.log("Verification URL:", emailVerificationUrl);
-
         await sessionAccount.createEmailVerification({
             url: emailVerificationUrl,
         });
@@ -177,13 +173,11 @@ const rollbackCreatedUser = async (userId) => {
 };
 
 const register = async ({ name, email, password }) => {
-    console.log("registeration started")
     if (!isCollegeEmail(email)) {
         throw new AppError("Only @ddu.du.ac.in email addresses are allowed.", 400, "INVALID_COLLEGE_EMAIL");
     }
 
     await ensureEmailIsAvailable(email);
-    console.log("email is available")
 
     let createdUser = null;
 
@@ -214,8 +208,7 @@ const register = async ({ name, email, password }) => {
             throw new AppError("Database request failed.", 502, "DATABASE_FAILURE", error);
         }
 
-        await createVerificationForUser({ email, password });
-        console.log("user verified ")
+        await createVerificationForUser(createdUser.$id);
 
         return {
             user: toPublicUser(userRow),
@@ -230,7 +223,7 @@ const register = async ({ name, email, password }) => {
 
         throw mapAppwriteError(error, "Registration failed.");
     }
-    
+
 };
 
 const login = async ({ email, password }) => {
