@@ -1,4 +1,13 @@
-{
+// import loadenv from 'dotenv'
+// import path from 'path'
+// import { fileURLToPath } from 'url'
+
+
+// loadenv.config({
+//   path : path.resolve(fileURLToPath(import.meta.url), '../.env')
+// })
+
+export default {
   "expo": {
     "name": "FrontEnd",
     "slug": "FrontEnd",

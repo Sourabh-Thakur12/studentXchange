@@ -45,7 +45,7 @@ const mapAppwriteError = (error, fallbackMessage = "Appwrite request failed.") =
 
     if (error.type === "general_unauthorized_scope") {
         return new AppError(
-            "Appwrite API key is missing required permissions.",
+            "Appwrite API key is missing required permissions. Add users.read, users.write, rows.read, rows.write, and sessions.write scopes to the backend API key.",
             502,
             "APPWRITE_UNAUTHORIZED_SCOPE",
             error.message
@@ -125,14 +125,30 @@ const ensureEmailIsAvailable = async (email) => {
     }
 };
 
-const createVerificationForUser = async ({ email, password }) => {
-    const session = await account.createEmailPasswordSession({ email, password });
-    const sessionAccount = new Account(createSessionClient(session.secret));
+const createVerificationForUser = async (userId) => {
+    const session = await users.createSession({ userId });
+
+    if (!session.secret) {
+        throw new AppError(
+            "Appwrite did not return a session secret for email verification.",
+            502,
+            "APPWRITE_SESSION_SECRET_MISSING"
+        );
+    }
+
+    const sessionAccount = new Account(
+        createSessionClient(session.secret)
+    );
 
     try {
-        await sessionAccount.createVerification({ url: emailVerificationUrl });
+        await sessionAccount.createEmailVerification({
+            url: emailVerificationUrl,
+        });
+
     } finally {
-        await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
+        await sessionAccount
+            .deleteSession({ sessionId: "current" })
+            .catch(() => null);
     }
 };
 
@@ -188,14 +204,15 @@ const register = async ({ name, email, password }) => {
                 },
             });
         } catch (error) {
-            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE");
+            throw new AppError("Database request failed.", 502, "DATABASE_FAILURE", error);
         }
 
-        await createVerificationForUser({ email, password });
+        await createVerificationForUser(createdUser.$id);
 
         return {
             user: toPublicUser(userRow),
         };
+
     } catch (error) {
         await rollbackCreatedUser(createdUser?.$id);
 
@@ -205,6 +222,7 @@ const register = async ({ name, email, password }) => {
 
         throw mapAppwriteError(error, "Registration failed.");
     }
+
 };
 
 const login = async ({ email, password }) => {
@@ -252,12 +270,7 @@ const login = async ({ email, password }) => {
 const verifyEmail = async ({ userId, secret }) => {
     try {
         await account.updateEmailVerification({ userId, secret });
-
-        const authUser = await users.get({ userId });
-
-        if (!authUser.emailVerification) {
-            throw new AppError("Verification link is invalid or has expired.", 400, "EXPIRED_OR_INVALID_VERIFICATION_LINK");
-        }
+        await users.updateEmailVerification({ userId, emailVerification: true });
 
         const userRow = await tablesDB.updateRow({
             databaseId,

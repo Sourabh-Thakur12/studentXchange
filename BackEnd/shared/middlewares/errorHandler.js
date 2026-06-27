@@ -18,7 +18,7 @@ const fixError = (error) => {
 
     if (error.type === "general_unauthorized_scope") {
         return new AppError(
-            "Appwrite API key is missing required permissions.",
+            "Appwrite API key is missing required permissions. Add users.read, users.write, rows.read, rows.write, and sessions.write scopes to the backend API key.",
             502,
             "APPWRITE_UNAUTHORIZED_SCOPE",
             error.message
@@ -30,7 +30,7 @@ const fixError = (error) => {
         return new AppError(message, error.code >= 400 && error.code < 600 ? error.code : 502, "APPWRITE_ERROR");
     }
 
-    return new AppError("Internal server error.", 500, "INTERNAL_ERROR");
+    return new AppError("Internal server error", 500, "INTERNAL_ERROR");
 };
 
 const errorHandler = (error, req, res, next) => {

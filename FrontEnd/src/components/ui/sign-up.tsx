@@ -23,7 +23,11 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
-export default function SignUp() {
+type SignUpProps = {
+  onSubmit: (name: string, email: string, password: string) => void;
+};
+
+export default function SignUp({ onSubmit }: SignUpProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +45,7 @@ export default function SignUp() {
           <View className="items-center mb-8">
             <Text className="text-3xl font-sand-bold text-primary">Join</Text>
             <Text className="text-3xl font-sand-bold text-primary">
-              studentXchange
+              campusXchange
             </Text>
             <Text className="text-on-primary-fixed mt-2 text-sm">
               The cozy corner of campus commerce.
@@ -134,7 +138,7 @@ export default function SignUp() {
             className="bg-primary-container rounded-xl py-4 flex-row justify-center items-center active:bg-[#6A9A3A]"
             activeOpacity={0.8}
           >
-            <Text className="text-[#1A2610] font-sand-bold text-lg mr-2">
+            <Text className="text-[#1A2610] font-sand-bold text-lg mr-2" onPress={() => onSubmit(name, email, password)}>
               Start Exchanging
             </Text>
             <Feather name="arrow-right" size={20} color="#1A2610" />

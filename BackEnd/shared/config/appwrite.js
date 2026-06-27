@@ -1,5 +1,4 @@
-require("dotenv").config();
-
+const config = require("./env");
 const {
     Account,
     Client,
@@ -10,14 +9,27 @@ const {
 } = require("node-appwrite");
 
 const appwriteConfig = {
-    endpoint: process.env.APPWRITE_ENDPOINT,
-    projectId: process.env.APPWRITE_PROJECT_ID,
-    apiKey: process.env.APPWRITE_API_KEY,
-    databaseId: process.env.APPWRITE_DATABASE_ID,
-    usersTableId: process.env.APPWRITE_USERS_TABLE_ID || "users",
-    emailVerificationUrl: process.env.APPWRITE_EMAIL_VERIFICATION_URL
-        || `${process.env.APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
+    endpoint: config.APPWRITE_ENDPOINT,
+    projectId: config.APPWRITE_PROJECT_ID,
+    apiKey: config.APPWRITE_API_KEY,
+    databaseId: config.APPWRITE_DATABASE_ID,
+    usersTableId: config.APPWRITE_USERS_TABLE_ID || "users",
+    emailVerificationUrl: config.APPWRITE_EMAIL_VERIFICATION_URL
+        || `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
 };
+
+const requiredServerEnv = [
+    "APPWRITE_ENDPOINT",
+    "APPWRITE_PROJECT_ID",
+    "APPWRITE_API_KEY",
+    "APPWRITE_DATABASE_ID",
+];
+
+const missingServerEnv = requiredServerEnv.filter((key) => !config[key]);
+
+if (missingServerEnv.length > 0) {
+    throw new Error(`Missing required Appwrite server env values: ${missingServerEnv.join(", ")}`);
+}
 
 const createBaseClient = () => new Client()
     .setEndpoint(appwriteConfig.endpoint)
