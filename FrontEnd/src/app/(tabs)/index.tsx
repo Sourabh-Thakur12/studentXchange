@@ -1,18 +1,71 @@
-import "@/global.css"
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
- 
-export default function App() {
+
+import { ScrollView, View } from "react-native";
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+
+import HomeHeader from "@/src/components/home/HomeHeader";
+import SearchBar from "@/src/components/home/SearchBar";
+import CategoryList from "@/src/components/home/CategoryList";
+import FeaturedCard from "@/src/components/home/FeaturedCard";
+import ProductCard from "@/src/components/home/ProdeuctCard";
+import SectionHeader from "@/src/components/common/SectionHeader";
+
+const SafeAreaView = styled(RNSafeAreaView)
+
+import {
+  categories,
+  featuredItem,
+  productItems,
+} from "@/src/constants/Home";
+import { styled } from "nativewind";
+
+export default function HomeScreen() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      {/*for  test*/}
-      <Text className="text-xl font-bold text-blue-500">
-        Welcome to StudentXchange!
-      </Text>
-      <Link href={'/(auth)/signUp'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Sign Up</Link>
-      <Link href={'/(auth)/signIn'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Sign In</Link>
-      <Link href={'/onboarding'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Onboarding</Link>
-      <Link href={'/(auth)/verifyEmail'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Verify Email</Link>
-    </View>
+    <SafeAreaView
+      edges={[""]}
+      className="flex-1 bg-surface-low"
+    >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-md pt-md pb-10"
+      >
+        {/* Header */}
+        <HomeHeader />
+
+        {/* Search */}
+        <View className="mt-lg">
+          <SearchBar />
+        </View>
+
+        {/* Categories */}
+        <View className="mt-lg">
+          <CategoryList categories={categories} />
+        </View>
+
+        {/* Featured */}
+        <View className="mt-xl">
+          <SectionHeader
+            title="Featured"
+            action="View All"
+          />
+        </View>
+
+        <View className="mt-md">
+          <FeaturedCard
+            item={featuredItem}
+          />
+        </View>
+
+        {/* Listings */}
+
+        <View className="mt-lg gap-md">
+          {productItems.map((item) => (
+            <ProductCard
+              key={item.id}
+              item={item}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
