@@ -14,8 +14,8 @@ const appwriteConfig = {
     apiKey: config.APPWRITE_API_KEY,
     databaseId: config.APPWRITE_DATABASE_ID,
     usersTableId: config.APPWRITE_USERS_TABLE_ID || "users",
-    emailVerificationUrl: config.APPWRITE_EMAIL_VERIFICATION_URL
-        || `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
+    emailVerificationUrl: config.APPWRITE_EMAIL_VERIFICATION_URL,
+    backendEmailVerificationUrl: `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
 };
 
 const requiredServerEnv = [

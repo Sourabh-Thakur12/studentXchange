@@ -32,7 +32,7 @@ const toPublicUser = (userRow) => ({
 const toPublicSession = (session) => ({
     id: session.$id,
     userId: session.userId,
-    secret: session.secret,
+    secret: session.secret || null,
     provider: session.provider,
     providerUid: session.providerUid,
     expire: session.expire,
@@ -153,9 +153,21 @@ const createVerificationForUser = async (userId) => {
 };
 
 const deleteCurrentSession = async (sessionSecret) => {
+    if (!sessionSecret) {
+        return;
+    }
+
     const sessionAccount = new Account(createSessionClient(sessionSecret));
 
     await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
+};
+
+const deleteUserSession = async ({ userId, sessionId }) => {
+    if (!userId || !sessionId) {
+        return;
+    }
+
+    await users.deleteSession({ userId, sessionId }).catch(() => null);
 };
 
 const rollbackCreatedUser = async (userId) => {
@@ -230,37 +242,55 @@ const login = async ({ email, password }) => {
         throw new AppError("Only @ddu.du.ac.in email addresses are allowed.", 400, "INVALID_COLLEGE_EMAIL");
     }
 
-    let session = null;
+    let passwordSession = null;
+    let serverSession = null;
 
     try {
-        session = await account.createEmailPasswordSession({ email, password });
+        passwordSession = await account.createEmailPasswordSession({ email, password });
 
-        const authUser = await users.get({ userId: session.userId });
+        const authUser = await users.get({ userId: passwordSession.userId });
 
         if (!authUser.emailVerification) {
-            await deleteCurrentSession(session.secret);
+            await deleteUserSession({
+                userId: passwordSession.userId,
+                sessionId: passwordSession.$id,
+            });
 
             throw new AppError("Please verify your email before logging in.", 403, "UNVERIFIED_EMAIL");
         }
 
-        let userRow = await getUserRowById(session.userId);
+        let userRow = await getUserRowById(passwordSession.userId);
 
         if (!userRow.verified) {
             userRow = await tablesDB.updateRow({
                 databaseId,
                 tableId: usersTableId,
-                rowId: session.userId,
+                rowId: passwordSession.userId,
                 data: { verified: true },
             });
         }
 
+        serverSession = await users.createSession({ userId: passwordSession.userId });
+
+        await deleteUserSession({
+            userId: passwordSession.userId,
+            sessionId: passwordSession.$id,
+        });
+
         return {
             user: toPublicUser(userRow),
-            session: toPublicSession(session),
+            session: toPublicSession(serverSession),
         };
     } catch (error) {
-        if (session && !(error instanceof AppError)) {
-            await deleteCurrentSession(session.secret);
+        if (serverSession?.secret && !(error instanceof AppError)) {
+            await deleteCurrentSession(serverSession.secret);
+        }
+
+        if (passwordSession && !(error instanceof AppError)) {
+            await deleteUserSession({
+                userId: passwordSession.userId,
+                sessionId: passwordSession.$id,
+            });
         }
 
         throw mapAppwriteError(error, "Login failed.");

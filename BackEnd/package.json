@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "node --watch server.js",
     "start": "node server.js",
+    "auth:dev": "node auth/devAuthFlow.js",
     "setup-db": "node auth/appwrite/setupdb.js",
     "setup-storage": "node auth/appwrite/setupStorage.js"
   }

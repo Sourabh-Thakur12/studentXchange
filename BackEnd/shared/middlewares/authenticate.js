@@ -7,6 +7,8 @@ const AppError = require("../utils/AppError");
 const getSessionSecret = (req) => {
     const authHeader = req.headers.authorization;
 
+    // Login returns an Appwrite session secret minted by the backend.
+    // Send it as: Authorization: Bearer <session.secret>
     if (authHeader?.startsWith("Bearer ")) {
         return authHeader.slice(7).trim();
     }
@@ -19,7 +21,11 @@ const authenticate = async (req, res, next) => {
         const sessionSecret = getSessionSecret(req);
 
         if (!sessionSecret) {
-            throw new AppError("Authentication required.", 401, "AUTHENTICATION_REQUIRED");
+            throw new AppError(
+                "Authentication required. Send the session secret returned by login as Authorization: Bearer <session.secret>.",
+                401,
+                "AUTHENTICATION_REQUIRED"
+            );
         }
 
         const account = new Account(createSessionClient(sessionSecret));
