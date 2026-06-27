@@ -188,9 +188,21 @@ const deleteUserSession = async ({ userId, sessionId }) => {
 
 
 const deleteCurrentSession = async (sessionSecret) => {
+    if (!sessionSecret) {
+        return;
+    }
+
     const sessionAccount = new Account(createSessionClient(sessionSecret));
 
     await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
+};
+
+const deleteUserSession = async ({ userId, sessionId }) => {
+    if (!userId || !sessionId) {
+        return;
+    }
+
+    await users.deleteSession({ userId, sessionId }).catch(() => null);
 };
 
 const rollbackCreatedUser = async (userId) => {
@@ -269,17 +281,20 @@ const login = async ({ email, password }) => {
     let serverSession = null;
 
     try {
-      passwordSession = await account.createEmailPasswordSession({ email, password });
+        passwordSession = await account.createEmailPasswordSession({ email, password });
 
         const authUser = await users.get({ userId: passwordSession.userId });
 
         if (!authUser.emailVerification) {
-            await deleteCurrentSession(session.secret);
+            await deleteUserSession({
+                userId: passwordSession.userId,
+                sessionId: passwordSession.$id,
+            });
 
             throw new AppError("Please verify your email before logging in.", 403, "UNVERIFIED_EMAIL");
         }
 
-        let userRow = await getUserRowById(session.userId);
+        let userRow = await getUserRowById(passwordSession.userId);
 
         if (!userRow.verified) {
             userRow = await tablesDB.updateRow({
@@ -302,8 +317,15 @@ const login = async ({ email, password }) => {
             session: toPublicSession(serverSession),
         };
     } catch (error) {
-        if (session && !(error instanceof AppError)) {
-            await deleteCurrentSession(session.secret);
+        if (serverSession?.secret && !(error instanceof AppError)) {
+            await deleteCurrentSession(serverSession.secret);
+        }
+
+        if (passwordSession && !(error instanceof AppError)) {
+            await deleteUserSession({
+                userId: passwordSession.userId,
+                sessionId: passwordSession.$id,
+            });
         }
 
         throw mapAppwriteError(error, "Login failed.");
