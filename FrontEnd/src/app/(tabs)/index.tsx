@@ -12,6 +12,7 @@ export default function App() {
       <Link href={'/(auth)/signUp'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Sign Up</Link>
       <Link href={'/(auth)/signIn'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Sign In</Link>
       <Link href={'/onboarding'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Onboarding</Link>
+      <Link href={'/(auth)/verifyEmail'} className="text-blue-500 bg-primary-container  m-2 px-10 py-3 rounded-3xl">Verify Email</Link>
     </View>
   );
 }
