@@ -1,14 +1,13 @@
 
-require("dotenv").config();
-
+const config = require("../../shared/config/env");
 const sdk = require("node-appwrite");
 
 const { Permission, Role } = sdk;
 
 const client = new sdk.Client()
-    .setEndpoint(process.env.APPWRITE_ENDPOINT)
-    .setProject(process.env.APPWRITE_PROJECT_ID)
-    .setKey(process.env.APPWRITE_API_KEY);
+    .setEndpoint(config.APPWRITE_ENDPOINT)
+    .setProject(config.APPWRITE_PROJECT_ID)
+    .setKey(config.APPWRITE_API_KEY);
 
 const storage = new sdk.Storage(client);
 
@@ -35,7 +34,7 @@ async function setupBucket() {
     const exists = await bucketExists();
 
     if (exists) {
-        console.log("[ok] Bucket already exists");
+        console.log("Bucket already exists");
         return;
     }
 
@@ -58,7 +57,7 @@ async function setupBucket() {
         transformations: true
     });
 
-    console.log("[ok] Created listing-images bucket");
+    console.log("Created listing-images bucket");
 }
 
 setupBucket().catch((error) => {
