@@ -3,14 +3,11 @@ import { View, Text, ScrollView } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "nativewind";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
 import { NewListingForm } from "@/src/utils/types";
 
-import {
-  Card,
-  Button
-} from "@/components/ui/index"
+import { Card, Button } from "@/components/ui/index";
 
 import {
   PhotosSection,
@@ -24,6 +21,49 @@ import {
 
 const SafeAreaView = styled(RNSafeAreaView);
 
+const NewListing = () => {
+  const form = useForm<NewListingForm>({
+    defaultValues: {
+      photos: [],
+      title: "",
+      category: "",
+      type: "both",
+      price: "",
+      condition: "",
+      description: "",
+    },
+  });
+
+  const onSubmit = (data: NewListingForm) => {
+    console.log(JSON.stringify(data,null,2));
+  }
+  return (
+    <SafeAreaView className="flex-1 bg-background">
+      <Header />
+      <FormProvider {...form}>
+        <ScrollView className="m-sm">
+          <PhotosSection />
+
+          <TitleField />
+
+          <CategoryField />
+
+          <ListingTypeField />
+
+          <PriceField />
+
+          <ConditionField />
+
+          <DescriptionField />
+
+          <VerificationSection />
+        </ScrollView>
+
+        <Footer onSubmit={onSubmit } />
+      </FormProvider>
+    </SafeAreaView>
+  );
+};
 
 function Header() {
   return (
@@ -36,13 +76,10 @@ function Header() {
   );
 }
 
-
-
 function VerificationSection() {
   return (
     <Card className="mt-xl p-md">
       <View className="flex-row items-start">
-
         {/* Icon */}
 
         <View
@@ -56,17 +93,12 @@ function VerificationSection() {
             bg-primary-container
           "
         >
-          <Ionicons
-            name="shield-checkmark"
-            size={24}
-            color="#3c6a00"
-          />
+          <Ionicons name="shield-checkmark" size={24} color="#3c6a00" />
         </View>
 
         {/* Content */}
 
         <View className="flex-1">
-
           <Text
             className="
               font-sand-bold
@@ -85,17 +117,12 @@ function VerificationSection() {
               text-on-surface-variant
             "
           >
-            Your listing will be marked as verified once
-            you're authenticated with your college email.
+            Your listing will be marked as verified once you're authenticated
+            with your college email.
           </Text>
 
           <View className="mt-md flex-row items-center">
-
-            <Ionicons
-              name="checkmark-circle"
-              size={18}
-              color="#3c6a00"
-            />
+            <Ionicons name="checkmark-circle" size={18} color="#3c6a00" />
 
             <Text
               className="
@@ -107,17 +134,18 @@ function VerificationSection() {
             >
               Trusted by students
             </Text>
-
           </View>
-
         </View>
-
       </View>
     </Card>
   );
 }
 
-function Footer() {
+type props = {
+  onSubmit: (data:any) => void;
+}
+function Footer({onSubmit}: props) {
+const { handleSubmit } = useFormContext<NewListingForm>();
   return (
     <View
       className="
@@ -157,53 +185,10 @@ function Footer() {
 
         {/* Right */}
 
-        <Button
-          Title="Publish Listing"
-          classname="min-w-44 rounded-sm"
-        />
+        <Button Title="Publish Listing" classname="min-w-44 rounded-sm" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
 }
-const NewListing = () => {
-  
-  const form = useForm<NewListingForm>({
-    defaultValues: {
-      photos: [],
-      title: "",
-      category: "",
-      type: "both",
-      price: "",
-      condition: "",
-      description: "",
-    },
-  });
-  return (
-    <SafeAreaView className="flex-1 bg-background">
-      <Header />
-         <ScrollView className="m-sm">
-   
-           <PhotosSection control={form.control} />
-   
-           <TitleField control={form.control} />
-   
-           <CategoryField control={form.control} />
-   
-           <ListingTypeField control={form.control} />
-   
-           <PriceField control={form.control} />
-   
-           <ConditionField control={form.control} />
-   
-           <DescriptionField control={form.control} />
-   
-           <VerificationSection />
-   
-         </ScrollView>
-   
-         <Footer />
-       </SafeAreaView>
-  );
-};
 
 export default NewListing;

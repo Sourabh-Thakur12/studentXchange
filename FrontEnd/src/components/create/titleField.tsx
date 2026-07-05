@@ -1,16 +1,13 @@
 
-import { Controller, Control } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Text, View } from "react-native";
 import { Input } from "@/components/ui/input";
 import { FieldLabel } from "@/components/ui/fieldLabel";
 
 import { NewListingForm } from "@/utils/types";
 
-export function TitleField({
-  control,
-}: {
-  control: Control<NewListingForm>;
-}) {
+export function TitleField() {
+  const { control } = useFormContext<NewListingForm>();
   return (
     <View className="mt-lg">
       <FieldLabel>Listing Title</FieldLabel>
