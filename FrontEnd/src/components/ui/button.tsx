@@ -1,8 +1,8 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, PressableProps } from 'react-native'
 
-type ButtonProps = {
+type ButtonProps = PressableProps & {
   Title: string;
-  onPress?: () => void;
+
   size?: string;
   classname?: string;
   variant?: "primary" | "secondary" | "transparent";

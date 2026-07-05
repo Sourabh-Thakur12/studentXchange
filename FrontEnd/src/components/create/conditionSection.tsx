@@ -1,15 +1,12 @@
-import { Control, Controller } from "react-hook-form";
+import {  Controller, useFormContext } from "react-hook-form";
 import { Text, View, Pressable } from "react-native";
 import type { NewListingForm } from "@/utils/types";
 
 import { FieldLabel } from "@/components/ui/fieldLabel";
 import { CONDITIONS } from "@/constants/Create";
 
-export function ConditionField({
-  control,
-}: {
-  control: Control<NewListingForm>;
-}) {
+export function ConditionField() {
+  const { control } = useFormContext<NewListingForm>();
   return (
     <View className="mt-lg">
       <FieldLabel>Condition</FieldLabel>

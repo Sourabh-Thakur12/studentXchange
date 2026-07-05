@@ -1,15 +1,12 @@
 
-import { Control, Controller } from "react-hook-form";
+import {  Controller, useFormContext } from "react-hook-form";
 import { NewListingForm } from "@/src/utils/types";
 import { ScrollView, Pressable, Text, Image, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { FieldLabel } from "@/components/ui/fieldLabel";
 
-export function PhotosSection({
-  control,
-}: {
-  control: Control<NewListingForm>;
-}) {
+export function PhotosSection() {
+  const { control } = useFormContext<NewListingForm>();
 
   
   return (

@@ -1,14 +1,11 @@
 
-import { Control, Controller } from "react-hook-form";
+import {  Controller, useFormContext } from "react-hook-form";
 import { NewListingForm } from "@/utils/types";
 import { Text, View, Pressable } from "react-native";
 import { FieldLabel } from "@/components/ui/fieldLabel";
 
-export function ListingTypeField({
-  control,
-}: {
-  control: Control<NewListingForm>;
-}) {
+export function ListingTypeField() {
+  const { control } = useFormContext<NewListingForm>();
   return (
     <View className="mt-lg">
       <FieldLabel>I am looking to</FieldLabel>
