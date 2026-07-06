@@ -8,6 +8,14 @@
 import config from "../config/env";
 const BASE_URL = config.BASE_URL;
 
+const buildUrl = (endpoint: string) => {
+  if (!BASE_URL) {
+    throw new Error("Missing EXPO_PUBLIC_EXPRESS_BASE_URL. Set it in FrontEnd/.env to your backend URL, for example http://192.168.1.3:5000.");
+  }
+
+  return `${BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+};
+
 type ApiResult<apiReturnType> =
   | { ok: true; data: apiReturnType }
   | { ok: false; error: string; status: number };
@@ -18,8 +26,9 @@ async function apiClient<apiReturnType>(
   token?: string,
 ): Promise<ApiResult<apiReturnType>> {
   try {
-    console.log(`${BASE_URL}${endpoint}`);
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const url = buildUrl(endpoint);
+    console.log(url);
+    const response = await fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",

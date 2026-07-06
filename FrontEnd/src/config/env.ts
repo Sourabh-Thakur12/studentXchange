@@ -7,9 +7,10 @@
 //   path : path.resolve(fileURLToPath(import.meta.url), '../../../.env')
 // })
 
-// TODO: expo constant to extras in app.config.ts and read via express
+const trimTrailingSlash = (value: string | undefined) => value?.trim().replace(/\/$/, "");
+
 const config = {
-  BASE_URL: process.env.EXPO_PUBLIC_EXPRESS_BASE_URL,
+  BASE_URL: trimTrailingSlash(process.env.EXPO_PUBLIC_EXPRESS_BASE_URL),
   APPWRITE_PROJECT_ID: process.env.APPWRITE_PROJECT_ID,
   APPWRITE_DATABASE_ID: process.env.APPWRITE_DATABASE_ID,
   APPWRITE_API_KEY: process.env.APPWRITE_API_KEY,

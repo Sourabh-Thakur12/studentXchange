@@ -18,7 +18,10 @@ const SignUpPage = () => {
         setError(response.error)
         console.log(response.error)
       } else {
-        router.replace("/(auth)/verifyEmail")
+        router.replace({
+          pathname: './verifyEmail',
+          params: { email },
+        })
         setLoading(false)
       }
     } catch (error) {
