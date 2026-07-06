@@ -1,23 +1,47 @@
-
-import {  Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { NewListingForm } from "@/src/utils/types";
-import { ScrollView, Pressable, Text, Image, View } from "react-native";
+import { ScrollView, Pressable, Text, Image, View, Alert } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { FieldLabel } from "@/components/ui/fieldLabel";
+// import { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 export function PhotosSection() {
   const { control } = useFormContext<NewListingForm>();
+  // const [image, setImage] = useState<string | undefined>(undefined);
+  const pickImage = async (photos: string[], onChange: (photos: string[]) => void) => {
+    const permissionResult =
+      await ImagePicker.getMediaLibraryPermissionsAsync();
 
-  
+    if (!permissionResult.granted) {
+      Alert.alert(
+        "Permission Required",
+        "Permission to acess storage is required",
+      );
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      onChange([...photos, result.assets[0].uri])
+    }
+  };
+
   return (
     <>
       <FieldLabel>Photos</FieldLabel>
-      
 
       <Controller
         control={control}
         name="photos"
-        render={({ field: { value } }) => (
+        render={({ field: { value, onChange } }) => (
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -37,12 +61,10 @@ export function PhotosSection() {
                 border-outline-variant
                 bg-surface-low
               "
+              onPress={() => pickImage(value, onChange)}
+              
             >
-              <FontAwesome
-                name="camera"
-                size={22}
-                color="#737a68"
-              />
+              <FontAwesome name="camera" size={22} color="#737a68" />
 
               <Text
                 className="
@@ -70,7 +92,7 @@ export function PhotosSection() {
                 "
               >
                 <Image
-                  source={{ uri }}
+                  source={{ uri: uri }}
                   resizeMode="cover"
                   className="h-full w-full"
                 />
@@ -88,11 +110,7 @@ export function PhotosSection() {
                     bg-on-surface/70
                   "
                 >
-                  <FontAwesome
-                    name="close"
-                    size={12}
-                    color="white"
-                  />
+                  <FontAwesome name="close" size={12} color="white" />
                 </Pressable>
               </View>
             ))}

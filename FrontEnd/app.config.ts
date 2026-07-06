@@ -2,12 +2,12 @@
 // import path from 'path'
 // import { fileURLToPath } from 'url'
 
-
 // loadenv.config({
 //   path : path.resolve(fileURLToPath(import.meta.url), '../.env')
 // })
 
 export default {
+<<<<<<< HEAD
   "expo": {
     "name": "campusxchange",
     "slug": "campusxchange",
@@ -21,31 +21,52 @@ export default {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+=======
+  expo: {
+    name: "FrontEnd",
+    slug: "FrontEnd",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "frontend",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    splash: {
+      image: "./assets/images/splash-icon.png",
+      resizeMode: "contain",
+      backgroundColor: "#ffffff",
+>>>>>>> f2468b1 (feat: image picker added)
     },
-    "ios": {
-      "supportsTablet": true
+    ios: {
+      supportsTablet: true,
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/adaptive-icon.png",
+        backgroundColor: "#ffffff",
       },
+<<<<<<< HEAD
       "usesCleartextTraffic": true,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.sourabhthakur.campusxchange"
+=======
+      edgeToEdgeEnabled: true,
+      predictiveBackGestureEnabled: false,
+      package: "com.sourabhthakur.FrontEnd",
+>>>>>>> f2468b1 (feat: image picker added)
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+    web: {
+      bundler: "metro",
+      output: "static",
+      favicon: "./assets/images/favicon.png",
     },
-    "plugins": [
+    plugins: [
       "expo-router",
       [
         "expo-font",
         {
-          "fonts": [
+          fonts: [
             "./assets/fonts/JetBrainsMono-ExtraLight.ttf",
             "./assets/fonts/JetBrainsMono-Regular.ttf",
             "./assets/fonts/JetBrainsMono-Medium.ttf",
