@@ -61,6 +61,7 @@ export default {
       },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "usesCleartextTraffic": true,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -71,6 +72,9 @@ export default {
       package: "com.sourabhthakur.FrontEnd",
 >>>>>>> f2468b1 (feat: image picker added)
 =======
+=======
+      "usesCleartextTraffic": true,
+>>>>>>> 223359e (changes)
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.sourabhthakur.FrontEnd"

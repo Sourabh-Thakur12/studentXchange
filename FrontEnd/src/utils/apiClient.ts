@@ -18,6 +18,14 @@ const buildUrl = (endpoint: string) => {
   return `${BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 };
 
+const buildUrl = (endpoint: string) => {
+  if (!BASE_URL) {
+    throw new Error("Missing EXPO_PUBLIC_EXPRESS_BASE_URL. Set it in FrontEnd/.env to your backend URL, for example http://192.168.1.3:5000.");
+  }
+
+  return `${BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+};
+
 type ApiResult<apiReturnType> =
   | { ok: true; data: apiReturnType }
   | { ok: false; error: string; status: number };

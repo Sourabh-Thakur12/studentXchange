@@ -126,6 +126,7 @@ const ensureEmailIsAvailable = async (email) => {
 };
 
 const createVerificationForUser = async (userId) => {
+    
     const session = await users.createSession({ userId });
 
     if (!session.secret) {
