@@ -142,7 +142,8 @@ const createVerificationForUser = async (userId) => {
     );
 
     try {
-        await sessionAccount.createEmailVerification({
+      console.log("emailVerificationUrl", emailVerificationUrl)
+      await sessionAccount.createEmailVerification({
             url: emailVerificationUrl,
         });
 
@@ -247,7 +248,7 @@ const login = async ({ email, password }) => {
     let serverSession = null;
 
     try {
-        passwordSession = await account.createEmailPasswordSession({ email, password });
+      passwordSession = await account.createEmailPasswordSession({ email, password });
 
         const authUser = await users.get({ userId: passwordSession.userId });
 

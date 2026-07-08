@@ -2,6 +2,7 @@ const express = require("express");
 
 const authRoutes = require("./auth/auth.routes");
 const listingRoutes = require("./listings/listing.routes");
+const adminRoutes = require("./admin/admin.routes");
 const errorHandler = require("./shared/middlewares/errorHandler");
 const ApiResponse = require("./shared/utils/apiResponse");
 const config = require('./shared/config/env');
@@ -30,6 +31,10 @@ app.get("/health", (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/listings", listingRoutes);
 
+if (config.ENVIRONMENT !== "production") {
+    app.use("/admin", adminRoutes); //remember to remove in production
+}
+
 app.use((req, res) => {
     return res.status(404).json(ApiResponse.error("Route not found."));
 });
@@ -39,7 +44,7 @@ app.use(errorHandler);
 const PORT = config.EXPRESS_PORT | 5000
 
 if (require.main === module) {
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
         console.log(`Server running on port ${PORT}`);
     });
 }

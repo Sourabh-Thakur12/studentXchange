@@ -6,7 +6,7 @@ const {
     Query,
     TablesDB,
     Users,
-} = require("node-appwrite");
+}  = require("node-appwrite");
 
 const appwriteConfig = {
     endpoint: config.APPWRITE_ENDPOINT,
@@ -16,7 +16,7 @@ const appwriteConfig = {
     usersTableId: config.APPWRITE_USERS_TABLE_ID || "users",
     listingsTableId: config.APPWRITE_LISTINGS_TABLE_ID || "listings",
     emailVerificationUrl: config.APPWRITE_EMAIL_VERIFICATION_URL,
-    backendEmailVerificationUrl: `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
+    backendEmailVerificationUrl: `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`
 };
 
 const requiredServerEnv = [
@@ -39,6 +39,8 @@ const createBaseClient = () => new Client()
 const adminClient = createBaseClient()
     .setKey(appwriteConfig.apiKey);
 
+const TableApi = new TablesDB(adminClient);
+
 const createSessionClient = (sessionSecret) => createBaseClient()
     .setSession(sessionSecret);
 
@@ -52,4 +54,5 @@ module.exports = {
     appwriteConfig,
     createBaseClient,
     createSessionClient,
+    TableApi,
 };

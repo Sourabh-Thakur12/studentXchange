@@ -13,7 +13,7 @@ const readEnv = (key) => {
 
 const expressAppBaseUrl = readEnv("EXPRESS_APP_BASE_URL") || readEnv("APP_BASE_URL");
 const expressPort = readEnv("EXPRESS_PORT") || readEnv("PORT");
-const frontendAppBaseUrl = readEnv("FRONTEND_APP_BASE_URL") || "http://192.168.1.3:3000";
+const frontendAppBaseUrl = readEnv("FRONTEND_APP_BASE_URL") || "http://192.168.1.3:8081";
 
 const config = {
   APPWRITE_ENDPOINT: readEnv("APPWRITE_ENDPOINT"),
@@ -26,9 +26,11 @@ const config = {
     || `${frontendAppBaseUrl.replace(/\/$/, "")}/verifyEmail`,
   EXPRESS_APP_BASE_URL: expressAppBaseUrl
     ? expressAppBaseUrl.replace(/\/$/, "")
-    : `http://localhost${expressPort ? `:${expressPort}` : ":5000"}`,
+    : `http://192.168.29.180${expressPort ? `:${expressPort}` : ":5000"}`,
 
   EXPRESS_PORT: expressPort || "5000",
+  ENVIRONMENT: readEnv("ENVIRONMENT") || "development",
 }
 
 module.exports = config
+// console.log("config: ", config)
