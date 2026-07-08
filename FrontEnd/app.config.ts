@@ -61,7 +61,8 @@ export default {
             "./assets/fonts/Quicksand-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "react-native-email-link"
     ],
     "experiments": {
       "typedRoutes": true

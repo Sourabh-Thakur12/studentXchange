@@ -7,6 +7,8 @@
 */
 import config from "../config/env";
 const BASE_URL = config.BASE_URL;
+console.log(BASE_URL);
+
 
 const buildUrl = (endpoint: string) => {
   if (!BASE_URL) {
