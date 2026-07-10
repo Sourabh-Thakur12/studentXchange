@@ -9,12 +9,12 @@
 
 export default {
   "expo": {
-    "name": "FrontEnd",
-    "slug": "FrontEnd",
+    "name": "campusxchange",
+    "slug": "campusxchange",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "campusxchange",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -33,7 +33,7 @@ export default {
       "usesCleartextTraffic": true,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.sourabhthakur.FrontEnd"
+      "package": "com.sourabhthakur.campusxchange"
     },
     "web": {
       "bundler": "metro",
@@ -66,6 +66,11 @@ export default {
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "77e37c37-b444-4608-b68a-02eb624288cc"
+      }
     }
   }
 }
