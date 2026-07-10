@@ -19,13 +19,17 @@ export default {
     "scheme": "campusxchange",
 =======
   "expo": {
-    "name": "FrontEnd",
-    "slug": "FrontEnd",
+    "name": "campusxchange",
+    "slug": "campusxchange",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+<<<<<<< HEAD
     "scheme": "frontend",
 >>>>>>> af3c10a (feat: centrailised api client)
+=======
+    "scheme": "campusxchange",
+>>>>>>> cfc2ef7 (feat: added developmnt build)
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -66,6 +70,7 @@ export default {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.sourabhthakur.campusxchange"
+<<<<<<< HEAD
 =======
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
@@ -79,6 +84,8 @@ export default {
       "predictiveBackGestureEnabled": false,
       "package": "com.sourabhthakur.FrontEnd"
 >>>>>>> af3c10a (feat: centrailised api client)
+=======
+>>>>>>> cfc2ef7 (feat: added developmnt build)
     },
     "web": {
       "bundler": "metro",

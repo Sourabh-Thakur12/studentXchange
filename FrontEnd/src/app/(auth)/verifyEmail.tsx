@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Text, View, Platform } from "react-native";
 import * as IntentLauncher from "expo-intent-launcher";
+import * as Linking from "expo-linking";
 
 
 export default function VerifyEmail() {
