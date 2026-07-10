@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Text, View, Platform } from "react-native";
 import * as IntentLauncher from "expo-intent-launcher";
+import * as Linking from "expo-linking";
 
 export default function VerifyEmail() {
   const { email, userId, secret } = useLocalSearchParams<{
@@ -45,6 +46,17 @@ export default function VerifyEmail() {
       }
     } catch (error) {
       console.error(`OpenEmailbox > android > ${error}`);
+    }
+  };
+
+  const openExpoApp = async () => {
+    try {
+      const url = "campusxchange://inbox"
+      console.log("url", url);
+      // Linking.openURL(url)
+      window.location.href = url;
+    } catch (error) {
+      console.error(`OpenExpoApp > ${error}`);
     }
   };
 
@@ -109,7 +121,8 @@ export default function VerifyEmail() {
               {emailAddress ? ` to ${emailAddress}` : ""}. Please check your
               inbox. Tap the link to verify and continue to sign in.
             </Text>
-            <Button Title="Open Email App" onPress={openEmailApp} />
+              <Button Title="Open Email App" onPress={openEmailApp} />
+              <Button Title="Test" onPress={openExpoApp} />
           </>
         )}
 
