@@ -1,6 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+// TODO: replace prop drilling with state manager
 
 const BLUE = '#0067B1';
 
@@ -9,6 +11,13 @@ type AuthInputProps = {
   label: string;
   placeholder: string;
   secureTextEntry?: boolean;
+  value: string;
+  onChangeText: (text: string) => void;
+};
+
+
+type SignInProps = {
+  onSubmit: (email: string, password: string) => void;
 };
 
 function BrandHeader() {
@@ -28,7 +37,7 @@ function BrandHeader() {
   );
 }
 
-function AuthInput({ icon, label, placeholder, secureTextEntry = false }: AuthInputProps) {
+function AuthInput({ icon, label, placeholder, secureTextEntry = false, value, onChangeText }: AuthInputProps) {
   return (
     <View>
       <Text className="mb-[6px] text-[12px] font-extrabold leading-[15px] text-[#656B76]">
@@ -42,6 +51,8 @@ function AuthInput({ icon, label, placeholder, secureTextEntry = false }: AuthIn
           placeholderTextColor="#9EA6B1"
           secureTextEntry={secureTextEntry}
           autoCapitalize="none"
+          value={value}
+          onChangeText={onChangeText}
         />
       </View>
     </View>
@@ -58,9 +69,9 @@ function ForgotPasswordLink() {
   );
 }
 
-function GradientButton() {
+function GradientButton({ onPress }: { onPress: () => void }) {
   return (
-    <Pressable className="mt-[35px] h-[39px] overflow-hidden rounded-[8px] active:opacity-90">
+    <Pressable className="mt-[35px] h-[39px] overflow-hidden rounded-[8px] active:opacity-90" onPress={onPress}>
       <LinearGradient
         colors={['#0067B8', '#245BD9', '#7600CF']}
         start={{ x: 0, y: 0.5 }}
@@ -83,7 +94,9 @@ function StudentStatusLink() {
   );
 }
 
-function SignInCard() {
+export function SignInCard({ onSubmit }: SignInProps) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <View className="mt-[35px] w-[304px] max-w-[90%] rounded-[21px] bg-white px-[21px] pb-[25px] pt-[21px]" style={styles.cardShadow}>
       <Text className="text-[22px] font-extrabold leading-[28px] text-[#20242A]">
@@ -94,32 +107,33 @@ function SignInCard() {
       </Text>
 
       <View className="mt-[22px]">
-        <AuthInput icon="mail-outline" label="University Email (@ddu.du.ac.in)" placeholder="student@ddu.du.ac.in" />
+        <AuthInput icon="mail-outline" label="University Email (@ddu.du.ac.in)" placeholder="student@ddu.du.ac.in" value={email} onChangeText={setEmail} />
       </View>
       <View className="mt-[14px]">
-        <AuthInput icon="lock-closed-outline" label="Password" placeholder="••••••••" secureTextEntry />
+        <AuthInput icon="lock-closed-outline" label="Password" placeholder="••••••••" secureTextEntry value={password} onChangeText={setPassword} />
       </View>
 
       <ForgotPasswordLink />
-      <GradientButton />
+      <GradientButton onPress={() => onSubmit(email, password)} />
       <StudentStatusLink />
     </View>
   );
 }
 
-export function SignInScreen() {
+export function SignInScreen({ onSubmit }:SignInProps) {
   return (
+
     <View className="flex-1 items-center overflow-hidden bg-[#F8FAFD] pt-8">
       <LinearGradient
         colors={['#F7FAFD', '#FAFBFD', '#FEFBFF']}
         locations={[0, 0.56, 1]}
-        style={StyleSheet.absoluteFill}
+        
       />
       <View className="w-full flex-1 items-center pt-[13px]">
         <BrandHeader />
-        <SignInCard />
+        <SignInCard onSubmit={onSubmit} />
       </View>
-    </View>
+      </View>
   );
 }
 

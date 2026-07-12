@@ -135,10 +135,11 @@ export default function SignUp({ onSubmit }: SignUpProps) {
 
           {/* Submit Button */}
           <TouchableOpacity
+            onPress={() => onSubmit(name, email, password)}
             className="bg-primary-container rounded-xl py-4 flex-row justify-center items-center active:bg-[#6A9A3A]"
             activeOpacity={0.8}
           >
-            <Text className="text-[#1A2610] font-sand-bold text-lg mr-2" onPress={() => onSubmit(name, email, password)}>
+            <Text className="text-[#1A2610] font-sand-bold text-lg mr-2" >
               Start Exchanging
             </Text>
             <Feather name="arrow-right" size={20} color="#1A2610" />
