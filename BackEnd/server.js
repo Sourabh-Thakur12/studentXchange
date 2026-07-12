@@ -1,6 +1,7 @@
 const express = require("express");
 
 const authRoutes = require("./auth/auth.routes");
+const listingRoutes = require("./listings/listing.routes");
 const errorHandler = require("./shared/middlewares/errorHandler");
 const ApiResponse = require("./shared/utils/apiResponse");
 const config = require('./shared/config/env');
@@ -27,6 +28,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/listings", listingRoutes);
 
 app.use((req, res) => {
     return res.status(404).json(ApiResponse.error("Route not found."));

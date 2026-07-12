@@ -14,5 +14,6 @@
     "auth:dev": "node auth/devAuthFlow.js",
     "setup-db": "node auth/appwrite/setupdb.js",
     "setup-storage": "node auth/appwrite/setupStorage.js"
+    ,"seed-listings": "node listings/appwrite/seedListings.js"
   }
 }

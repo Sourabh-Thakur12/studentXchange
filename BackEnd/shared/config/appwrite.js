@@ -14,6 +14,7 @@ const appwriteConfig = {
     apiKey: config.APPWRITE_API_KEY,
     databaseId: config.APPWRITE_DATABASE_ID,
     usersTableId: config.APPWRITE_USERS_TABLE_ID || "users",
+    listingsTableId: config.APPWRITE_LISTINGS_TABLE_ID || "listings",
     emailVerificationUrl: config.APPWRITE_EMAIL_VERIFICATION_URL,
     backendEmailVerificationUrl: `${config.EXPRESS_APP_BASE_URL || "http://localhost:5000"}/auth/verify-email`,
 };
