@@ -11,6 +11,7 @@ const SignUpPage = () => {
   
   const onSubmit = async (name: string, email: string, password: string) => {
     try {
+      setError("")
       setLoading(true)
       const response = await api.post('/auth/register', { name, email, password })
       console.log(response.ok)
