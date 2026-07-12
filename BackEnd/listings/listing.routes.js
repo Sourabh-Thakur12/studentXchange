@@ -6,7 +6,11 @@ const { createListingSchema } = require("./listing.validation");
 
 const router = express.Router();
 
+<<<<<<< HEAD
 router.post("/create", authenticate, validate({ body: createListingSchema }), listingController.createListing);
 router.get("/get", authenticate, listingController.getListings);
+=======
+router.post("/", authenticate, validate({ body: createListingSchema }), listingController.createListing);
+>>>>>>> f55c18d (create listings)
 
 module.exports = router;
