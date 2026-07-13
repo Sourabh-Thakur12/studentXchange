@@ -2,8 +2,9 @@ import { Button, } from "@/src/components/ui";
 import { api } from "@/src/utils/apiClient";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Text, View, Platform } from "react-native";
+import { ActivityIndicator, Linking, Text, View, Platform } from "react-native";
 import * as IntentLauncher from "expo-intent-launcher";
+
 
 export default function VerifyEmail() {
   const { email, userId, secret } = useLocalSearchParams<{
@@ -11,6 +12,7 @@ export default function VerifyEmail() {
     userId?: string | string[];
     secret?: string | string[];
   }>();
+  const [redirectTime, setRedirectTime] = useState<number>(5);
   const [status, setStatus] = useState<
     "idle" | "verifying" | "success" | "error"
   >("idle");
@@ -38,14 +40,30 @@ export default function VerifyEmail() {
 
   const openExpoApp = async () => {
     try {
-      const url = "campusxchange://inbox"
+      const url = "campusxchange://signIn"
       console.log("url", url);
-      // Linking.openURL(url)
-      window.location.href = url;
+      Linking.openURL(url)
+      // window.location.href = url;
     } catch (error) {
       console.error(`OpenExpoApp > ${error}`);
     }
   };
+
+  useEffect(() => {
+    if (status !== "success") return
+
+    const interval = setInterval(() => {
+      setRedirectTime(prev => prev - 1)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [status]);
+
+  useEffect(() => {
+    if (redirectTime <= 0) {
+      openExpoApp();
+    }
+  }, [redirectTime]);
 
   useEffect(() => {
     if (!verificationUserId || !verificationSecret || hasVerified.current) {
@@ -70,6 +88,7 @@ export default function VerifyEmail() {
         return;
       }
 
+      setRedirectTime(5);
       setStatus("success");
       setMessage("Email verified successfully. Redirecting to sign in...");
 
@@ -85,9 +104,15 @@ export default function VerifyEmail() {
     <View className="bg-on-primary min-h-screen flex items-center">
       <View className="p-8 rounded-3xl flex gap-5">
         <Text className="text-3xl font-sand-bold">
-          {status === "verifying"
-            ? "Verifying email"
-            : "Check your college email"}
+          {
+            (status === "verifying"
+              ? "verifying email"
+              : status === "success"
+              ? "email verified successfully"
+              : status === "error"
+              ? "verification failed, please try again"
+              : "Check your college email")
+          }
         </Text>
 
         {verificationUserId && verificationSecret ? (
@@ -103,13 +128,14 @@ export default function VerifyEmail() {
           </View>
         ) : (
           <>
-            <Text>
-              We have sent a verification email
-              {emailAddress ? ` to ${emailAddress}` : ""}. Please check your
-              inbox. Tap the link to verify and continue to sign in.
-            </Text>
-              <Button Title="Open Email App" onPress={openEmailApp} />
-              <Button Title="Test" onPress={openExpoApp} />
+              <Text>
+                {status === "success" ? `Your ${emailAddress} is now active. You can now access the campusxchange marketplace ` :
+              `We have sent a verification email to ${emailAddress}. Please check your inbox. Tap the link to verify and continue to sign in.`}
+              </Text>
+              {status === "success" ? <Button Title="Continue to login" onPress={openExpoApp} /> :
+                <Button Title="Open Email App" onPress={openEmailApp} />}
+              {/*<Button Title="Test" onPress={openExpoApp} />*/}
+              {status === "success" && <Text>  Redirecting to login in {redirectTime} seconds... </Text> }
           </>
         )}
 
