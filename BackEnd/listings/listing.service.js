@@ -38,4 +38,15 @@ const createListing = async (sellerId, input) => {
     }
 };
 
-module.exports = { createListing };
+const getListings = async () => {
+    try {
+        return await tablesDB.listRows({
+            databaseId: appwriteConfig.databaseId,
+            tableId: appwriteConfig.listingsTableId,
+        });
+    } catch (error) {
+        throw new AppError("Could not get listings.", 502, "LISTINGS_GET_FAILED", error.message);
+    }
+};
+
+module.exports = { createListing, getListings };

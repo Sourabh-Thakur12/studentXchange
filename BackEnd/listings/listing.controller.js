@@ -10,4 +10,13 @@ const createListing = async (req, res, next) => {
     }
 };
 
-module.exports = { createListing };
+const getListings = async (req, res, next) => {
+    try {
+        const listings = await listingService.getListings();
+        return res.status(200).json(ApiResponse.success({ listings }, "Listings retrieved successfully."));
+    } catch (error) {
+        return next(error);
+    }
+};
+
+module.exports = { createListing, getListings };
