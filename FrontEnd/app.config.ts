@@ -8,8 +8,6 @@
 // })
 
 export default {
-<<<<<<< HEAD
-<<<<<<< HEAD
   "expo": {
     "name": "campusxchange",
     "slug": "campusxchange",
@@ -17,43 +15,12 @@ export default {
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "campusxchange",
-=======
-  "expo": {
-    "name": "campusxchange",
-    "slug": "campusxchange",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-<<<<<<< HEAD
-    "scheme": "frontend",
->>>>>>> af3c10a (feat: centrailised api client)
-=======
-    "scheme": "campusxchange",
->>>>>>> cfc2ef7 (feat: added developmnt build)
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-<<<<<<< HEAD
-=======
-  expo: {
-    name: "FrontEnd",
-    slug: "FrontEnd",
-    version: "1.0.0",
-    orientation: "portrait",
-    icon: "./assets/images/icon.png",
-    scheme: "frontend",
-    userInterfaceStyle: "automatic",
-    newArchEnabled: true,
-    splash: {
-      image: "./assets/images/splash-icon.png",
-      resizeMode: "contain",
-      backgroundColor: "#ffffff",
->>>>>>> f2468b1 (feat: image picker added)
-=======
->>>>>>> af3c10a (feat: centrailised api client)
     },
     "ios": {
       "supportsTablet": true
@@ -63,29 +30,10 @@ export default {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       "usesCleartextTraffic": true,
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.sourabhthakur.campusxchange"
-<<<<<<< HEAD
-=======
-      edgeToEdgeEnabled: true,
-      predictiveBackGestureEnabled: false,
-      package: "com.sourabhthakur.FrontEnd",
->>>>>>> f2468b1 (feat: image picker added)
-=======
-=======
-      "usesCleartextTraffic": true,
->>>>>>> 223359e (changes)
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.sourabhthakur.FrontEnd"
->>>>>>> af3c10a (feat: centrailised api client)
-=======
->>>>>>> cfc2ef7 (feat: added developmnt build)
     },
     "web": {
       "bundler": "metro",
