@@ -1,7 +1,6 @@
 const express = require("express");
 
 const authRoutes = require("./auth/auth.routes");
-const listingRoutes = require("./listings/listing.routes");
 const adminRoutes = require("./admin/admin.routes");
 const listingRoutes = require("./listings/listing.routes");
 const errorHandler = require("./shared/middlewares/errorHandler");
