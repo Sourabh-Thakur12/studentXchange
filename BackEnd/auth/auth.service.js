@@ -137,9 +137,6 @@ const createVerificationForUser = async (userId) => {
         );
     }
 
-    const sessionAccount = new Account(
-        createSessionClient(session.secret)
-    );
 
     try {
       console.log("emailVerificationUrl", emailVerificationUrl)
@@ -154,15 +151,6 @@ const createVerificationForUser = async (userId) => {
     }
 };
 
-const deleteCurrentSession = async (sessionSecret) => {
-    if (!sessionSecret) {
-        return;
-    }
-
-    const sessionAccount = new Account(createSessionClient(sessionSecret));
-
-    await sessionAccount.deleteSession({ sessionId: "current" }).catch(() => null);
-};
 
 const deleteUserSession = async ({ userId, sessionId }) => {
     if (!userId || !sessionId) {
@@ -302,7 +290,12 @@ const login = async ({ email, password }) => {
 const verifyEmail = async ({ userId, secret }) => {
     try {
         await account.updateEmailVerification({ userId, secret });
-        await users.updateEmailVerification({ userId, emailVerification: true });
+
+        const authUser = await users.get({ userId });
+
+        if (!authUser.emailVerification) {
+            throw new AppError("Verification link is invalid or has expired.", 400, "EXPIRED_OR_INVALID_VERIFICATION_LINK");
+        }
 
         const userRow = await tablesDB.updateRow({
             databaseId,

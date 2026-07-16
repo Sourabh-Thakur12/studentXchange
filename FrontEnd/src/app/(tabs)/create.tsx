@@ -8,6 +8,7 @@ export default function App() {
       <Text className="font-mono-bold-italic text-2xl text-primary ">
         Create Tab
       </Text>
+
     </View>
   );
 }

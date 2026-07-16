@@ -35,6 +35,10 @@ if (config.ENVIRONMENT !== "production") {
     app.use("/admin", adminRoutes); //remember to remove in production
 }
 
+if (config.ENVIRONMENT !== "production") {
+    app.use("/admin", adminRoutes); //remember to remove in production
+}
+
 app.use((req, res) => {
     return res.status(404).json(ApiResponse.error("Route not found."));
 });

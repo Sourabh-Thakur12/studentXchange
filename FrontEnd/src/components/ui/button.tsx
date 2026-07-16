@@ -1,15 +1,15 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, PressableProps } from 'react-native'
 
-type ButtonProps = {
+type ButtonProps = PressableProps & {
   Title: string;
-  onPress?: () => void;
+
   size?: string;
   classname?: string;
   variant?: "primary" | "secondary" | "transparent";
   textColor?: string;
 }
 
-const button = ({ Title, onPress, variant = "primary", className, size, textColor }: ButtonProps) => {
+const button = ({ Title, onPress, variant = "primary", classname, size, textColor }: ButtonProps) => {
   const sizes = "px-5 py-3";
 
   const variants = {
@@ -18,7 +18,7 @@ const button = ({ Title, onPress, variant = "primary", className, size, textColo
     transparent: "bg-transparent text-black",
   };
   return (
-    <Pressable onPress={onPress} className={`rounded-3xl items-center justify-center ${className} ${size ? size : sizes} ${variants[variant]}`}>
+    <Pressable onPress={onPress} className={`items-center justify-center ${classname} ${size ? size : sizes} ${variants[variant]}`}>
       <Text className={`text-${textColor ? textColor : "white"} `}>{Title}</Text>
     </Pressable>
   )
