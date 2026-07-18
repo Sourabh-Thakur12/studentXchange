@@ -22,10 +22,12 @@ type ApiResult<apiReturnType> =
   | { ok: true; data: apiReturnType }
   | { ok: false; error: string; status: number };
 
+
+type ApiErrorBody = { message: string };
 async function apiClient<apiReturnType>(
   endpoint: string,
   options: RequestInit = {},
-  token?: string,
+  token?: string | null,
 ): Promise<ApiResult<apiReturnType>> {
   try {
     const url = buildUrl(endpoint);
@@ -40,12 +42,13 @@ async function apiClient<apiReturnType>(
     });
 
     const body = await response.json().catch(() => null);
+    const errorBody: ApiErrorBody | null = body as ApiErrorBody | null;
 
     if (!response.ok) {
       return {
         ok: false,
         status: response.status,
-        error: body?.message ?? `Request failed (${response.status})`,
+        error: errorBody?.message ?? `Request failed (${response.status})`,
       };
     }
 
@@ -66,10 +69,10 @@ async function apiClient<apiReturnType>(
 
 
 export const api = {
-  get: <apiRequest>(endpoint: string, token?: string) =>
+  get: <apiRequest>(endpoint: string, token?: string | null) =>
     apiClient<apiRequest>(endpoint, { method: `GET` }, token),
   
-  post: <apiRequest>(endpoint: string, body: unknown, token?: string) =>
+  post: <apiRequest>(endpoint: string, body:unknown, token?: string) =>
     apiClient<apiRequest>(
       endpoint,
       { method: `POST`, body: JSON.stringify(body) },

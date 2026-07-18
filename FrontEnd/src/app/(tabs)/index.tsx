@@ -8,6 +8,8 @@ import CategoryList from "@/src/components/home/CategoryList";
 import FeaturedCard from "@/src/components/home/FeaturedCard";
 import ProductCard from "@/src/components/home/ProdeuctCard";
 import SectionHeader from "@/src/components/common/SectionHeader";
+import { api } from "@/src/utils/apiClient";
+import * as SecureStore from 'expo-secure-store'
 
 const SafeAreaView = styled(RNSafeAreaView)
 
@@ -17,8 +19,23 @@ import {
   productItems,
 } from "@/src/constants/Home";
 import { styled } from "nativewind";
+import { useEffect } from "react";
 
-export default function HomeScreen() {
+export default async function HomeScreen() {
+  // const items = await api.get("/listings/get", "eyJpZCI6IjZhNTUyNzBhMDAxYmE0NjUwY2Q2Iiwic2VjcmV0IjoiYTg2NTg3NmIwMDE0NDU5NWE4ZjUzMzcxYTc1YzgxNzE5ZjkyNGI1YmQ2NDI0NzYwYzFjZGUxM2I5YzI3ZWE1ZWMwYWM3ZmEwNmM2NTk1NjlhYjUwZjgxZjU5ZGE3MWFhMDA0NzE5ZjhhM2VmZGY3YTQ0YTlhN2IwZGY5MGUyNmUzMjg1NTYyNWFhNzAwYzkwMTNiYTEyZjI2NTFmODk4YTg0YjA0ZjY2MWYwMmE5NGYzYTE3ZjdhM2Y4NGNiY2QxMjU5MTA2YzBlYTUzYWY4MGIyZGFkOGNhOGYxNjg1YmU4ODA3NmQxMmM5MjY5MmYxNzk0OTA0MWMwODcyNjI0NSJ9");
+  // console.log(items);
+
+  const sessionSecret = await SecureStore.getItemAsync("sessionSecret")
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const items = await api.get("/listings/get", sessionSecret)
+      console.log(items)
+    };
+    fetchData();
+  }, [])
+  
+
   return (
     <SafeAreaView
       edges={[""]}

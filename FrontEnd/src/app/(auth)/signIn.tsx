@@ -4,6 +4,35 @@ import { SignInScreen} from '@/src/components/ui/index'
 import { api } from '@/src/utils/apiClient'
 import { router } from 'expo-router';
 import { SignInCard } from '@/src/components/ui/auth'
+import * as SecureStore from 'expo-secure-store'
+
+
+
+type LoginRespose = {
+
+  "success": boolean,
+  "message": string,
+  "data": {
+    "user": {
+      "id": string,
+      "userId": string,
+      "name": string,
+      "email": string,
+      "avatarUrl": string | null,
+      "verified": boolean,
+      "createdAt": string
+    },
+    "session": {
+      "id": string,
+      "userId": string,
+      "secret": string,
+      "provider": string,
+      "providerUid": string,
+      "expire": string
+    }
+  }
+
+}
 
 
 
@@ -20,11 +49,13 @@ export const SignIn = () => {
       try {
         setError("")
         setLoading(true)
-        const response = await api.post('/auth/login', { email, password })
+        const response  = await api.post<LoginRespose>('/auth/login', { email, password })
        
         if (response.ok) {
           router.replace('/')
           setLoading(false)
+
+          await SecureStore.setItemAsync("sessionSecret", response.data.data.session.secret)
           
         } else {
           setError(response.error)

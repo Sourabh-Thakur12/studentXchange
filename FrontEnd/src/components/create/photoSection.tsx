@@ -109,6 +109,9 @@ export function PhotosSection() {
                     rounded-full
                     bg-on-surface/70
                   "
+                  onPress={() => {
+                    onChange(value.filter((_, i) => i !== index));
+                  }}
                 >
                   <FontAwesome name="close" size={12} color="white" />
                 </Pressable>
